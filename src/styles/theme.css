@@ -1,0 +1,367 @@
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  --font-size: 16px;
+  --app-background: #05070D;
+  --app-surface: #0B101A;
+  --app-surface-soft: #111827;
+  --app-border: #243044;
+  --app-text: #F8FAFC;
+  --app-muted-text: #9CA3AF;
+  --app-text-muted: #9CA3AF;
+  --app-text-subtle: #6B7280;
+  --app-primary: #2563EB;
+  --app-secondary: #8B5CF6;
+  --app-accent: #22D3EE;
+  --app-dot: rgba(139, 92, 246, 0.22);
+  --app-grid-line: rgba(59, 130, 246, 0.10);
+  --app-shadow: rgba(0, 0, 0, 0.45);
+  --app-glow: rgba(139, 92, 246, 0.35);
+  --app-canvas-ambient: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(99,102,241,0.06) 0%, transparent 80%);
+  --app-overlay: rgba(0, 0, 0, 0.62);
+  --app-card-shadow: 0 28px 80px rgba(0, 0, 0, 0.48);
+  --app-paper-texture: none;
+  --background: #ffffff;
+  --foreground: oklch(0.145 0 0);
+  --card: #ffffff;
+  --card-foreground: oklch(0.145 0 0);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.145 0 0);
+  --primary: #030213;
+  --primary-foreground: oklch(1 0 0);
+  --secondary: oklch(0.95 0.0058 264.53);
+  --secondary-foreground: #030213;
+  --muted: #ececf0;
+  --muted-foreground: #717182;
+  --accent: #e9ebef;
+  --accent-foreground: #030213;
+  --destructive: #d4183d;
+  --destructive-foreground: #ffffff;
+  --border: rgba(0, 0, 0, 0.1);
+  --input: transparent;
+  --input-background: #f3f3f5;
+  --switch-background: #cbced4;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: oklch(0.708 0 0);
+  --chart-1: oklch(0.646 0.222 41.116);
+  --chart-2: oklch(0.6 0.118 184.704);
+  --chart-3: oklch(0.398 0.07 227.392);
+  --chart-4: oklch(0.828 0.189 84.429);
+  --chart-5: oklch(0.769 0.188 70.08);
+  --radius: 0.625rem;
+  --sidebar: oklch(0.985 0 0);
+  --sidebar-foreground: oklch(0.145 0 0);
+  --sidebar-primary: #030213;
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.97 0 0);
+  --sidebar-accent-foreground: oklch(0.205 0 0);
+  --sidebar-border: oklch(0.922 0 0);
+  --sidebar-ring: oklch(0.708 0 0);
+}
+
+:root[data-app-theme="light"] {
+  --app-background: #FFFFFF;
+  --app-surface: #F8FAFC;
+  --app-surface-soft: #F1F5F9;
+  --app-border: #CBD5E1;
+  --app-text: #0F172A;
+  --app-muted-text: #475569;
+  --app-text-muted: #475569;
+  --app-text-subtle: #64748B;
+  --app-primary: #2563EB;
+  --app-secondary: #7C3AED;
+  --app-accent: #0891B2;
+  --app-dot: rgba(15, 23, 42, 0.08);
+  --app-grid-line: rgba(15, 23, 42, 0.05);
+  --app-shadow: rgba(15, 23, 42, 0.12);
+  --app-glow: rgba(37, 99, 235, 0.10);
+  --app-canvas-ambient: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(15,23,42,0.035) 0%, transparent 80%);
+  --app-overlay: rgba(15, 23, 42, 0.22);
+  --app-card-shadow: 0 20px 56px var(--app-shadow);
+  --app-paper-texture: none;
+  --background: #FFFFFF;
+  --foreground: #0F172A;
+  --card: #F8FAFC;
+  --card-foreground: #0F172A;
+  --border: #E2E8F0;
+}
+
+:root[data-app-theme="paper"] {
+  --app-background: #F6F1E8;
+  --app-surface: #FFFAF0;
+  --app-surface-soft: #EFE6D6;
+  --app-border: #D8CBB8;
+  --app-text: #27221D;
+  --app-muted-text: #6F6254;
+  --app-text-muted: #6F6254;
+  --app-text-subtle: #8A7B69;
+  --app-primary: #2F5D62;
+  --app-secondary: #9A6B4F;
+  --app-accent: #C08A4B;
+  --app-dot: rgba(120, 90, 55, 0.12);
+  --app-grid-line: rgba(120, 90, 55, 0.06);
+  --app-shadow: rgba(79, 60, 35, 0.14);
+  --app-glow: rgba(154, 107, 79, 0.10);
+  --app-canvas-ambient: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(120,90,55,0.04) 0%, transparent 80%);
+  --app-overlay: rgba(39, 34, 29, 0.20);
+  --app-card-shadow: 0 20px 56px var(--app-shadow);
+  --app-paper-texture:
+    radial-gradient(circle at 16% 12%, rgba(255, 255, 255, 0.45) 0 1px, transparent 1px),
+    radial-gradient(circle at 78% 36%, rgba(154, 107, 79, 0.09) 0 1px, transparent 1px),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.28), transparent 42%);
+  --background: #F6F1E8;
+  --foreground: #27221D;
+  --card: #FFFAF0;
+  --card-foreground: #27221D;
+  --border: #D8CBB8;
+}
+
+.dark {
+  --background: oklch(0.145 0 0);
+  --foreground: oklch(0.985 0 0);
+  --card: oklch(0.145 0 0);
+  --card-foreground: oklch(0.985 0 0);
+  --popover: oklch(0.145 0 0);
+  --popover-foreground: oklch(0.985 0 0);
+  --primary: oklch(0.985 0 0);
+  --primary-foreground: oklch(0.205 0 0);
+  --secondary: oklch(0.269 0 0);
+  --secondary-foreground: oklch(0.985 0 0);
+  --muted: oklch(0.269 0 0);
+  --muted-foreground: oklch(0.708 0 0);
+  --accent: oklch(0.269 0 0);
+  --accent-foreground: oklch(0.985 0 0);
+  --destructive: oklch(0.396 0.141 25.723);
+  --destructive-foreground: oklch(0.637 0.237 25.331);
+  --border: oklch(0.269 0 0);
+  --input: oklch(0.269 0 0);
+  --ring: oklch(0.439 0 0);
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --chart-1: oklch(0.488 0.243 264.376);
+  --chart-2: oklch(0.696 0.17 162.48);
+  --chart-3: oklch(0.769 0.188 70.08);
+  --chart-4: oklch(0.627 0.265 303.9);
+  --chart-5: oklch(0.645 0.246 16.439);
+  --sidebar: oklch(0.205 0 0);
+  --sidebar-foreground: oklch(0.985 0 0);
+  --sidebar-primary: oklch(0.488 0.243 264.376);
+  --sidebar-primary-foreground: oklch(0.985 0 0);
+  --sidebar-accent: oklch(0.269 0 0);
+  --sidebar-accent-foreground: oklch(0.985 0 0);
+  --sidebar-border: oklch(0.269 0 0);
+  --sidebar-ring: oklch(0.439 0 0);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-switch-background: var(--switch-background);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /**
+  * Default typography styles for HTML elements (h1-h4, p, label, button, input).
+  * These are in @layer base, so Tailwind utility classes (like text-sm, text-lg) automatically override them.
+  */
+
+  html {
+    font-size: var(--font-size);
+  }
+
+  h1 {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  h2 {
+    font-size: var(--text-xl);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  h3 {
+    font-size: var(--text-lg);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  h4 {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  label {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  button {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-medium);
+    line-height: 1.5;
+  }
+
+  input {
+    font-size: var(--text-base);
+    font-weight: var(--font-weight-normal);
+    line-height: 1.5;
+  }
+}
+
+/* Neural Synapse Animations */
+@keyframes spin {
+  from { transform: rotate(0deg) scale(1.05); }
+  to { transform: rotate(360deg) scale(1.05); }
+}
+
+@keyframes synapse-pulse {
+  0% { opacity: 0; stroke-width: 1; }
+  30% { opacity: 0.8; stroke-width: 5; }
+  100% { opacity: 0; stroke-width: 1; }
+}
+
+/* Filter button glow + animated contour (simula bolinhas passando) */
+@keyframes dots-rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes neuron-dot-horizontal {
+  0% { left: 12%; opacity: 0; transform: scale(0.75); }
+  18% { opacity: 1; transform: scale(1); }
+  78% { opacity: 1; transform: scale(1); }
+  100% { left: 88%; opacity: 0; transform: scale(0.75); }
+}
+
+@keyframes neuron-dot-horizontal-reverse {
+  0% { right: 12%; opacity: 0; transform: scale(0.75); }
+  18% { opacity: 1; transform: scale(1); }
+  78% { opacity: 1; transform: scale(1); }
+  100% { right: 88%; opacity: 0; transform: scale(0.75); }
+}
+
+@keyframes neuron-dot-vertical {
+  0% { top: 12%; opacity: 0; transform: scale(0.75); }
+  18% { opacity: 1; transform: scale(1); }
+  78% { opacity: 1; transform: scale(1); }
+  100% { top: 88%; opacity: 0; transform: scale(0.75); }
+}
+
+@keyframes neuron-dot-vertical-reverse {
+  0% { bottom: 12%; opacity: 0; transform: scale(0.75); }
+  18% { opacity: 1; transform: scale(1); }
+  78% { opacity: 1; transform: scale(1); }
+  100% { bottom: 88%; opacity: 0; transform: scale(0.75); }
+}
+
+.neuron-selection-outline {
+  position: absolute;
+  inset: -7px;
+  z-index: 10000;
+  pointer-events: none;
+  border: 1.5px solid currentColor;
+  border-radius: 36px;
+  opacity: 0.9;
+  box-shadow:
+    0 0 12px currentColor,
+    0 0 28px color-mix(in srgb, currentColor 55%, transparent);
+}
+
+.neuron-selection-outline::before {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: inherit;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, currentColor 45%, transparent),
+    0 0 18px color-mix(in srgb, currentColor 35%, transparent);
+  opacity: 0.6;
+}
+
+.neuron-selection-dot {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: #fff;
+  box-shadow:
+    0 0 8px #fff,
+    0 0 16px currentColor,
+    0 0 28px currentColor;
+}
+
+.neuron-selection-dot-top {
+  top: -4px;
+  animation: neuron-dot-horizontal 2.4s linear infinite;
+}
+
+.neuron-selection-dot-right {
+  right: -4px;
+  animation: neuron-dot-vertical 2.7s linear infinite 0.35s;
+}
+
+.neuron-selection-dot-bottom {
+  bottom: -4px;
+  animation: neuron-dot-horizontal-reverse 2.6s linear infinite 0.7s;
+}
+
+.neuron-selection-dot-left {
+  left: -4px;
+  animation: neuron-dot-vertical-reverse 2.5s linear infinite 1s;
+}
+
+.filter-btn {
+  position: relative;
+  overflow: visible;
+  z-index: 1;
+}
+
+/* removed animated contour for filter buttons per user request */
