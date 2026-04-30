@@ -1,5 +1,3 @@
-import { verifyToken } from '@clerk/backend';
-
 export const GENERIC_BILLING_ERROR = 'Nao foi possivel processar billing';
 
 export function setCorsHeaders(res: any, methods = 'OPTIONS,POST') {
@@ -21,7 +19,7 @@ export function getBearerToken(authHeader: any) {
   return match?.[1]?.trim() || '';
 }
 
-export async function requireClerkUser(req: any) {
+export async function requireAuthenticatedUser(req: any) {
   const token = getBearerToken(req.headers['authorization']);
   if (!token) {
     const error = new Error('Missing bearer token');
@@ -29,21 +27,9 @@ export async function requireClerkUser(req: any) {
     throw error;
   }
 
-  const clerkSecretKey = process.env.CLERK_SECRET_KEY;
-  if (!clerkSecretKey) {
-    throw new Error('Missing required env: CLERK_SECRET_KEY');
-  }
-
-  const verifiedToken = await verifyToken(token, { secretKey: clerkSecretKey });
-  const userId = verifiedToken.sub || '';
-
-  if (!userId) {
-    const error = new Error('Token without user id');
-    (error as any).statusCode = 401;
-    throw error;
-  }
-
-  return { userId };
+  const error = new Error('Authentication provider temporarily disabled');
+  (error as any).statusCode = 401;
+  throw error;
 }
 
 export function getAppOrigin(req: any) {

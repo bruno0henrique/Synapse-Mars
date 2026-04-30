@@ -76,7 +76,7 @@ async function saveSubscription(sql: any, subscription: Stripe.Subscription, for
   }
 
   await saveStripeSubscriptionState(sql, {
-    clerkUserId: subscription.metadata?.clerk_user_id || null,
+    authUserId: subscription.metadata?.auth_user_id || subscription.metadata?.clerk_user_id || null,
     stripeCustomerId,
     stripeSubscriptionId,
     plan: nextPlan,

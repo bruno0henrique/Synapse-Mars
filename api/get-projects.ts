@@ -1,6 +1,6 @@
 import { ensureBillingAccount } from '../server/billing.js';
 import { getSql } from '../server/db.js';
-import { requireClerkUser } from '../server/request.js';
+import { requireAuthenticatedUser } from '../server/request.js';
 
 const GENERIC_GET_PROJECTS_ERROR = 'Nao foi possivel carregar projetos';
 
@@ -19,7 +19,7 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
-    const { userId } = await requireClerkUser(req);
+    const { userId } = await requireAuthenticatedUser(req);
     const sql = getSql();
     await ensureBillingAccount(sql, userId).catch((billingError) => {
       console.error('Billing bootstrap skipped in get-projects:', billingError);

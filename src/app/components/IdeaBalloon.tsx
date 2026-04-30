@@ -342,7 +342,7 @@ export function IdeaBalloon({
     >
       {/* Visual Card (Neural Organizer Style) */}
       <div
-        className="relative rounded-[28px] transition-all duration-300 flex flex-col backdrop-blur-md z-[9999]"
+        className="idea-balloon-card relative rounded-[28px] transition-all duration-300 flex flex-col backdrop-blur-md z-[9999]"
         style={{
           width: '100%',
           height: '100%',
@@ -494,7 +494,7 @@ export function IdeaBalloon({
 
               {showAiMenu && !isAiProcessing && (
                 <div
-                  className="absolute bottom-full left-0 mb-3 rounded-2xl shadow-2xl z-[100] overflow-hidden backdrop-blur-xl"
+                  className="idea-ai-menu absolute bottom-full left-0 mb-3 rounded-2xl shadow-2xl z-[100] overflow-hidden backdrop-blur-xl"
                   style={{
                     width: '236px',
                     background: 'linear-gradient(180deg, rgba(18,14,28,0.98), rgba(8,8,14,0.98))',
@@ -553,7 +553,7 @@ export function IdeaBalloon({
 
               {showCatMenu && (
                 <div
-                  className="absolute bottom-full left-0 mb-3 rounded-2xl shadow-2xl z-[100] backdrop-blur-xl"
+                  className="idea-category-menu absolute bottom-full left-0 mb-3 rounded-2xl shadow-2xl z-[100] backdrop-blur-xl"
                   style={{
                     width: '240px',
                     background: 'rgba(10,10,16,0.97)',
@@ -725,7 +725,7 @@ export function IdeaBalloon({
 
             {showDeleteConfirm && (
               <div
-                className="absolute bottom-full right-0 z-[120] mb-3 w-[238px] rounded-2xl border border-red-300/20 bg-[#120d13]/95 p-3 shadow-[0_22px_70px_rgba(0,0,0,0.72),0_0_22px_rgba(239,68,68,0.10)] backdrop-blur-xl"
+                className="idea-delete-menu absolute bottom-full right-0 z-[120] mb-3 w-[238px] rounded-2xl border border-red-300/20 bg-[#120d13]/95 p-3 shadow-[0_22px_70px_rgba(0,0,0,0.72),0_0_22px_rgba(239,68,68,0.10)] backdrop-blur-xl"
                 data-balloon-control="true"
                 onClick={e => e.stopPropagation()}
               >

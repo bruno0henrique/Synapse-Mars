@@ -1,6 +1,6 @@
 import { checkIdeaSaveAllowed } from '../server/billing.js';
 import { getSql } from '../server/db.js';
-import { requireClerkUser } from '../server/request.js';
+import { requireAuthenticatedUser } from '../server/request.js';
 
 const MAX_PAYLOAD_BYTES = 512 * 1024;
 const MAX_IDEAS_PER_REQUEST = 500;
@@ -164,7 +164,7 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
-    const { userId } = await requireClerkUser(req);
+    const { userId } = await requireAuthenticatedUser(req);
 
     const userRateKey = `user:${userId}`;
     if (isRateLimited(userRateKey)) {

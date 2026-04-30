@@ -1,6 +1,6 @@
 import { ensureBillingAccount, getBillingStatusForUser, setStripeCustomerForUser } from '../server/billing.js';
 import { getSql } from '../server/db.js';
-import { getAppOrigin, parseBody, requireClerkUser, setCorsHeaders } from '../server/request.js';
+import { getAppOrigin, parseBody, requireAuthenticatedUser, setCorsHeaders } from '../server/request.js';
 import { getPriceIdForPlan, getStripeClient, type PaidPlanId } from '../server/stripe.js';
 
 const GENERIC_ERROR = 'Nao foi possivel iniciar assinatura';
@@ -21,7 +21,7 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
-    const { userId } = await requireClerkUser(req);
+    const { userId } = await requireAuthenticatedUser(req);
     const body = parseBody(req.body);
     const plan = body.plan;
 
@@ -46,7 +46,7 @@ export default async function handler(req: any, res: any) {
     if (!customerId) {
       const customer = await stripe.customers.create({
         metadata: {
-          clerk_user_id: userId
+          auth_user_id: userId
         }
       });
       customerId = customer.id;
@@ -66,12 +66,12 @@ export default async function handler(req: any, res: any) {
         }
       ],
       metadata: {
-        clerk_user_id: userId,
+        auth_user_id: userId,
         plan
       },
       subscription_data: {
         metadata: {
-          clerk_user_id: userId,
+          auth_user_id: userId,
           plan
         }
       },

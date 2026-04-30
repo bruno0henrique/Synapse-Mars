@@ -1,6 +1,6 @@
 import { buildSafeBillingStatus, getBillingStatusForUser, saveStripeSubscriptionState } from '../server/billing.js';
 import { getSql } from '../server/db.js';
-import { requireClerkUser, setCorsHeaders } from '../server/request.js';
+import { requireAuthenticatedUser, setCorsHeaders } from '../server/request.js';
 import { getPlanFromPriceId, getStripeClient, type PaidPlanId } from '../server/stripe.js';
 
 const GENERIC_ERROR = 'Nao foi possivel carregar billing';
@@ -40,7 +40,8 @@ async function syncCheckoutSession(sql: any, userId: string, sessionId: string) 
     expand: ['subscription']
   });
 
-  if (session.metadata?.clerk_user_id !== userId) {
+  const sessionUserId = session.metadata?.auth_user_id || session.metadata?.clerk_user_id;
+  if (sessionUserId !== userId) {
     console.error('Checkout session user mismatch', { userId, sessionId });
     return;
   }
@@ -60,7 +61,7 @@ async function syncCheckoutSession(sql: any, userId: string, sessionId: string) 
   }
 
   await saveStripeSubscriptionState(sql, {
-    clerkUserId: userId,
+    authUserId: userId,
     stripeCustomerId,
     stripeSubscriptionId: subscription.id,
     plan,
@@ -81,7 +82,7 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
-    const { userId } = await requireClerkUser(req);
+    const { userId } = await requireAuthenticatedUser(req);
     const sql = getSql();
     const checkoutSessionId = queryValue(req.query?.session_id);
 

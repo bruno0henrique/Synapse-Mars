@@ -1,5 +1,5 @@
 import { neon } from '@neondatabase/serverless';
-import { verifyToken } from '@clerk/backend';
+import { requireAuthenticatedUser } from '../server/request.js';
 
 const GENERIC_GET_IDEAS_ERROR = 'Nao foi possivel carregar ideias';
 
@@ -17,14 +17,8 @@ export default async function handler(req: any, res: any) {
     return res.status(405).json({ error: 'Metodo nao permitido' });
   }
 
-  const authHeader = req.headers['authorization'];
-  if (!authHeader) {
-    return res.status(401).json({ error: 'Autenticacao necessaria' });
-  }
-
   try {
-    const token = authHeader.split(' ')[1];
-    const { sub: userId } = await verifyToken(token, { secretKey: process.env.CLERK_SECRET_KEY });
+    const { userId } = await requireAuthenticatedUser(req);
 
     const databaseUrl = process.env.NEON_API_URL;
     if (!databaseUrl || (!databaseUrl.startsWith('postgres://') && !databaseUrl.startsWith('postgresql://'))) {
@@ -59,6 +53,11 @@ export default async function handler(req: any, res: any) {
 
     return res.status(200).json(mappedIdeas);
   } catch (error: any) {
+    if (error?.statusCode === 401) {
+      console.error('Invalid get-ideas auth token:', error);
+      return res.status(401).json({ error: 'Autenticacao necessaria' });
+    }
+
     console.error('Erro ao buscar ideias:', error);
     return res.status(500).json({ error: GENERIC_GET_IDEAS_ERROR });
   }

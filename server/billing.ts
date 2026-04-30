@@ -276,15 +276,15 @@ export async function markStripeSubscriptionPastDue(sql: any, stripeCustomerId: 
 }
 
 export async function saveStripeSubscriptionState(sql: any, data: {
-  clerkUserId?: string | null;
+  authUserId?: string | null;
   stripeCustomerId: string;
   stripeSubscriptionId: string | null;
   plan: PlanId;
   subscriptionStatus: string;
   currentPeriodEnd?: Date | null;
 }) {
-  if (data.clerkUserId) {
-    await ensureBillingAccount(sql, data.clerkUserId);
+  if (data.authUserId) {
+    await ensureBillingAccount(sql, data.authUserId);
     await sql`
       UPDATE user_billing
       SET stripe_customer_id = ${data.stripeCustomerId},
@@ -292,7 +292,7 @@ export async function saveStripeSubscriptionState(sql: any, data: {
         plan = ${data.plan},
         subscription_status = ${data.subscriptionStatus},
         current_period_end = ${data.currentPeriodEnd ? data.currentPeriodEnd.toISOString() : null}::timestamptz
-      WHERE clerk_user_id = ${data.clerkUserId}
+      WHERE clerk_user_id = ${data.authUserId}
     `;
     return;
   }

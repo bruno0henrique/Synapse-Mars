@@ -1,6 +1,6 @@
 import { checkProjectCreationAllowed } from '../server/billing.js';
 import { getSql } from '../server/db.js';
-import { requireClerkUser } from '../server/request.js';
+import { requireAuthenticatedUser } from '../server/request.js';
 
 const GENERIC_SAVE_PROJECT_ERROR = 'Nao foi possivel salvar projeto';
 
@@ -19,7 +19,7 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
-    const { userId } = await requireClerkUser(req);
+    const { userId } = await requireAuthenticatedUser(req);
     const sql = getSql();
     const body = typeof req.body === 'string' ? JSON.parse(req.body || '{}') : (req.body || {});
     const { id, name, description } = body;

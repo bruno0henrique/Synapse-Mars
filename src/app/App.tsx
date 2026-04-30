@@ -1,5 +1,4 @@
 import { useState, useCallback, useEffect, useRef } from 'react';
-import { useAuth, SignInButton, SignUpButton } from '@clerk/clerk-react';
 import { toPng } from 'html-to-image';
 import { Brain, UserCircle, LayoutGrid, Activity, Folder, Settings, Sparkles, HelpCircle } from 'lucide-react';
 import { BrainstormBoard, resetAnimatedConnections, BALLOON_W, BALLOON_H } from './components/BrainstormBoard';
@@ -26,23 +25,41 @@ import type { PaidPlanId } from '../lib/plans';
 const ESPACO_BORDA_TELA = 20;
 const CARTESIAN_GUIDE_STORAGE_KEY = 'synapse:cartesianGuideVisible';
 const APP_THEME_STORAGE_KEY = 'synapse:appTheme';
+const APP_THEME = 'mars-enterprise';
 
-export type AppTheme = 'neon-dark' | 'light' | 'paper';
+type EnterpriseIntegration = {
+  title: string;
+  description: string;
+  Icon: typeof Sparkles;
+};
 
-function isAppTheme(value: unknown): value is AppTheme {
-  return value === 'neon-dark' || value === 'light' || value === 'paper';
-}
-
-function getInitialAppTheme(): AppTheme {
-  if (typeof window === 'undefined') return 'neon-dark';
-
-  try {
-    const storedTheme = window.localStorage.getItem(APP_THEME_STORAGE_KEY);
-    return isAppTheme(storedTheme) ? storedTheme : 'neon-dark';
-  } catch {
-    return 'neon-dark';
+const ENTERPRISE_INTEGRATIONS: EnterpriseIntegration[] = [
+  {
+    title: 'Okta SSO',
+    description: 'Login corporativo preparado para identidade enterprise.',
+    Icon: UserCircle
+  },
+  {
+    title: 'Power Apps',
+    description: 'Conexoes planejadas com fluxos internos e formularios.',
+    Icon: LayoutGrid
+  },
+  {
+    title: 'Power BI',
+    description: 'Dados prontos para dashboards e leitura operacional.',
+    Icon: Activity
+  },
+  {
+    title: 'Governanca',
+    description: 'Auditoria, seguranca e politicas para uso corporativo.',
+    Icon: Settings
+  },
+  {
+    title: 'IA operacional',
+    description: 'Automacoes assistidas para transformar ideias em acoes.',
+    Icon: Sparkles
   }
-}
+];
 
 function getInitialCartesianGuideVisibility() {
   if (typeof window === 'undefined') return true;
@@ -261,11 +278,11 @@ type RefreshBillingOptions = {
 };
 
 const CATEGORIES = [
-  { name: 'Problema', color: '#ef4444', bgColor: '#fee2e2' },
-  { name: 'Solução', color: '#10b981', bgColor: '#d1fae5' },
-  { name: 'Recurso', color: '#3b82f6', bgColor: '#dbeafe' },
-  { name: 'Objetivo', color: '#f59e0b', bgColor: '#fef3c7' },
-  { name: 'Risco', color: '#8b5cf6', bgColor: '#ede9fe' }
+  { name: 'Problema', color: '#dc2626', bgColor: '#fee2e2' },
+  { name: 'Solução', color: '#10bfa3', bgColor: '#ccfbf1' },
+  { name: 'Recurso', color: '#0617a8', bgColor: '#e0e7ff' },
+  { name: 'Objetivo', color: '#1d4ed8', bgColor: '#dbeafe' },
+  { name: 'Risco', color: '#0f766e', bgColor: '#ccfbf1' }
 ];
 
 function getInitialAiBalloonSize(text: string) {
@@ -291,7 +308,9 @@ function categorizeIdea(text: string): string {
 
 
 export default function App() {
-  const { isLoaded, isSignedIn, getToken } = useAuth();
+  const isLoaded = true;
+  const isSignedIn = false;
+  const getToken = useCallback(async () => null, []);
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
@@ -306,7 +325,6 @@ export default function App() {
   const [hasLoadedInitialIdeas, setHasLoadedInitialIdeas] = useState(false);
   const [hasCompletedPostLoginLoad, setHasCompletedPostLoginLoad] = useState(false);
   const [isPlansModalOpen, setIsPlansModalOpen] = useState(false);
-  const [appTheme, setAppTheme] = useState<AppTheme>(getInitialAppTheme);
   const [billingActionLoading, setBillingActionLoading] = useState(false);
   const [activeNav, setActiveNav] = useState('grid');
   const [isOnboardingHintOpen, setIsOnboardingHintOpen] = useState(false);
@@ -334,14 +352,14 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    document.documentElement.dataset.appTheme = appTheme;
+    document.documentElement.dataset.appTheme = APP_THEME;
 
     try {
-      window.localStorage.setItem(APP_THEME_STORAGE_KEY, appTheme);
+      window.localStorage.setItem(APP_THEME_STORAGE_KEY, APP_THEME);
     } catch {
       // Keep the in-session theme even if localStorage is unavailable.
     }
-  }, [appTheme]);
+  }, []);
 
   const createAuthHeaders = useCallback(async (headers?: HeadersInit) => {
     const token = await getToken();
@@ -760,7 +778,7 @@ export default function App() {
 
 
   // -- Visual UI Logic (Existing) --
-  const [recentColors, setRecentColors] = useState<string[]>(['#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6']);
+  const [recentColors, setRecentColors] = useState<string[]>(['#0617a8', '#10bfa3', '#1d4ed8', '#0f766e', '#dc2626']);
   const [connectingFrom, setConnectingFrom] = useState<string | null>(null);
   const [connectingLine, setConnectingLine] = useState<{ x1: number; y1: number; x2: number; y2: number } | null>(null);
   const [connectionFlash, setConnectionFlash] = useState<{ from: string; to: string } | null>(null);
@@ -1133,12 +1151,52 @@ export default function App() {
         <div className="auth-screen__grid" aria-hidden="true" />
         <div className="auth-screen__glow" aria-hidden="true" />
 
-        <div className="auth-card">
+        <div className="auth-shell">
+          <section className="auth-enterprise-panel" aria-label="Synapse for Mars">
+            <div className="auth-enterprise-panel__brand">
+              <span className="auth-enterprise-panel__synapse">
+                <Brain size={22} />
+                Synapse IA
+              </span>
+              <span className="mars-brand-chip mars-brand-chip--panel">
+                <span className="mars-mark" aria-hidden="true">M</span>
+                for Mars
+              </span>
+            </div>
+
+            <div className="auth-enterprise-panel__copy">
+              <span className="auth-enterprise-panel__eyebrow">
+                <Sparkles size={13} />
+                Enterprise workspace
+              </span>
+              <h1>Synapse for Mars</h1>
+              <p>
+                Uma camada visual corporativa para apresentar mapas de ideias, conexoes e fluxos de IA operacional.
+              </p>
+            </div>
+
+            <div className="enterprise-integrations" aria-label="Integracoes planejadas">
+              {ENTERPRISE_INTEGRATIONS.map(({ title, description, Icon }) => (
+                <article className="enterprise-integration-card" key={title}>
+                  <span className="enterprise-integration-card__icon" aria-hidden="true">
+                    <Icon size={18} />
+                  </span>
+                  <span className="enterprise-integration-card__copy">
+                    <strong>{title}</strong>
+                    <span>{description}</span>
+                  </span>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          <div className="auth-card">
           <div className="auth-card__brand">
             <span className="auth-card__logo" aria-hidden="true">
               <Brain size={30} />
             </span>
             <span className="auth-card__brand-name">Synapse IA</span>
+            <span className="auth-card__mars-wordmark">Mars</span>
           </div>
 
           <div className="auth-card__copy">
@@ -1146,16 +1204,14 @@ export default function App() {
               <Sparkles size={13} />
               Mapa neural com IA
             </span>
-            <h2>Entre no seu espaço neural</h2>
+            <h2>Entre no workspace Mars</h2>
             <p>Conecte ideias, organize insights e continue seu mapa com IA.</p>
           </div>
 
           <div className="auth-card__actions">
-            <SignInButton mode="modal">
-              <button className="btn-sync">
-                ENTRAR
+              <button className="btn-sync" disabled title="Login temporariamente desabilitado">
+                LOGIN DESABILITADO
               </button>
-            </SignInButton>
 
             <div className="auth-card__divider">
               <span />
@@ -1163,12 +1219,11 @@ export default function App() {
               <span />
             </div>
 
-            <SignUpButton mode="modal">
-              <button className="btn-create-account">
+              <button className="btn-create-account" disabled title="Novo provedor de login sera configurado depois">
                 <UserCircle size={20} />
-                CRIAR CONTA
+                AGUARDANDO NOVO LOGIN
               </button>
-            </SignUpButton>
+          </div>
           </div>
         </div>
       </div>
@@ -1196,6 +1251,10 @@ export default function App() {
           <h1 className="text-lg font-bold text-white tracking-widest uppercase">
             Synapse IA
           </h1>
+          <span className="mars-brand-chip">
+            <span className="mars-mark" aria-hidden="true">M</span>
+            for Mars
+          </span>
         </div>
         <div className="app-header-actions">
           <button
@@ -1213,25 +1272,6 @@ export default function App() {
             onOpenPlans={openPlansModal}
           />
         </div>
-         {/*<div className="flex items-center gap-4">
-          <button onClick={clearAll} className="p-2 text-gray-400 hover:text-red-400 transition-colors" title="Limpar Tudo">
-            <Trash2 size={18} />
-          </button>
-          
-          <div className="flex items-center gap-3 pl-2 border-l border-white/10">
-            <UserButton 
-              showName={false}
-              appearance={{ elements: { userButtonAvatarBox: 'w-8 h-8' } }} 
-            />
-            <button 
-              onClick={() => signOut()} 
-              className="flex  items-center justify-center gap-2 h-8 w-18 rounded-lg bg-white/5 border border-white/10 text-gray-400 hover:text-white hover:bg-white/10 transition-all text-xs font-bold uppercase tracking-wider"
-            >
-              <LogOut size={14} />
-              Sair
-            </button>
-          </div>
-        </div>*/}
       </header>
 
       {/* Main Board */}
@@ -1287,17 +1327,17 @@ export default function App() {
       />
 
       {/* Bottom Navigation Menu */}
-      <nav className="absolute bottom-4 left-1/2 -translate-x-1/2 z-[100] w-[90%] max-w-lg bg-white/5 backdrop-blur-xl border border-white/10 rounded-full h-16 flex items-center justify-around px-4 shadow-2xl">
-        <button onClick={() => setActiveNav('grid')} className={`p-3 rounded-full transition-all ${activeNav === 'grid' ? 'bg-purple-500/20 text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.2)]' : 'text-gray-500 hover:text-gray-300'}`}>
+      <nav className="app-bottom-nav absolute bottom-4 left-1/2 -translate-x-1/2 z-[100] w-[90%] max-w-lg bg-white/5 backdrop-blur-xl border border-white/10 rounded-full h-16 flex items-center justify-around px-4 shadow-2xl">
+        <button onClick={() => setActiveNav('grid')} className={`app-bottom-nav__button p-3 rounded-full transition-all ${activeNav === 'grid' ? 'is-active bg-purple-500/20 text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.2)]' : 'text-gray-500 hover:text-gray-300'}`}>
           <LayoutGrid size={22} />
         </button>
-        <button onClick={() => setActiveNav('status')} className={`p-3 rounded-full transition-all ${activeNav === 'status' ? 'bg-purple-500/20 text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.2)]' : 'text-gray-500 hover:text-gray-300'}`}>
+        <button onClick={() => setActiveNav('status')} className={`app-bottom-nav__button p-3 rounded-full transition-all ${activeNav === 'status' ? 'is-active bg-purple-500/20 text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.2)]' : 'text-gray-500 hover:text-gray-300'}`}>
           <Activity size={22} />
         </button>
-        <button onClick={() => setActiveNav('folders')} className={`p-3 rounded-full transition-all ${activeNav === 'folders' ? 'bg-purple-500/20 text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.2)]' : 'text-gray-500 hover:text-gray-300'}`}>
+        <button onClick={() => setActiveNav('folders')} className={`app-bottom-nav__button p-3 rounded-full transition-all ${activeNav === 'folders' ? 'is-active bg-purple-500/20 text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.2)]' : 'text-gray-500 hover:text-gray-300'}`}>
           <Folder size={22} />
         </button>
-        <button onClick={() => setActiveNav('settings')} className={`p-3 rounded-full transition-all ${activeNav === 'settings' ? 'bg-purple-500/20 text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.2)]' : 'text-gray-500 hover:text-gray-300'}`}>
+        <button onClick={() => setActiveNav('settings')} className={`app-bottom-nav__button p-3 rounded-full transition-all ${activeNav === 'settings' ? 'is-active bg-purple-500/20 text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.2)]' : 'text-gray-500 hover:text-gray-300'}`}>
           <Settings size={22} />
         </button>
       </nav>
@@ -1331,8 +1371,6 @@ export default function App() {
         billingError={billingError}
         onOpenPlans={openPlansModal}
         onManageSubscription={handleManageSubscription}
-        appTheme={appTheme}
-        onThemeChange={setAppTheme}
       />
 
       {/* Plans Modal */}

@@ -1,7 +1,7 @@
 import { GoogleGenerativeAI } from '@google/generative-ai';
 import { consumeAiUsageSlot, refundAiUsageSlot, type BillingStatus } from '../server/billing.js';
 import { getSql } from '../server/db.js';
-import { parseBody, requireClerkUser } from '../server/request.js';
+import { parseBody, requireAuthenticatedUser } from '../server/request.js';
 
 const GEMINI_MODEL = 'gemini-2.5-flash';
 const GENERIC_ERROR = 'Nao foi possivel gerar sugestoes';
@@ -56,7 +56,7 @@ export default async function handler(req: any, res: any) {
   try {
     let userId = '';
     try {
-      const auth = await requireClerkUser(req);
+      const auth = await requireAuthenticatedUser(req);
       userId = auth.userId;
     } catch (authError) {
       console.error('Invalid Gemini auth token:', authError);

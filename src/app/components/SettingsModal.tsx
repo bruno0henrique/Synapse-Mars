@@ -3,7 +3,6 @@ import {
   X,
   Settings,
   User,
-  Paintbrush,
   Database,
   AlertCircle,
   CheckCircle,
@@ -13,10 +12,8 @@ import {
   CreditCard,
   Sparkles
 } from 'lucide-react';
-import { useAuth, useClerk, useUser } from '@clerk/clerk-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { BillingLoadState, BillingStatus } from '../../lib/billing';
-import type { AppTheme } from '../App';
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -27,11 +24,9 @@ interface SettingsModalProps {
   billingError: string | null;
   onOpenPlans: () => void;
   onManageSubscription: () => void | Promise<void>;
-  appTheme: AppTheme;
-  onThemeChange: (theme: AppTheme) => void;
 }
 
-type TabType = 'perfil' | 'aparencia' | 'dados';
+type TabType = 'perfil' | 'dados';
 type IconComponent = React.ComponentType<{ size?: number; className?: string }>;
 type ActionVariant = 'neutral' | 'primary' | 'danger' | 'dangerSoft';
 type CardTone = 'default' | 'danger';
@@ -39,16 +34,25 @@ type ProfileFeedback = {
   tone: 'success' | 'error';
   message: string;
 };
+type DisabledAuthUser = {
+  id: string;
+  fullName: string | null;
+  firstName: string | null;
+  lastName: string | null;
+  imageUrl: string | null;
+  primaryEmailAddress?: { emailAddress?: string | null } | null;
+  update: (input: { firstName: string; lastName: string }) => Promise<DisabledAuthUser>;
+  reload: () => Promise<void>;
+  setProfileImage: (input: { file: File }) => Promise<{ publicUrl?: string | null }>;
+};
 
 const sidebarTabs: Array<{ id: TabType; label: string; description?: string; Icon: IconComponent }> = [
   { id: 'perfil', label: 'Perfil', description: 'Gerencie suas informações', Icon: User },
-  { id: 'aparencia', label: 'Aparência', description: 'Personalize a interface', Icon: Paintbrush },
   { id: 'dados', label: 'Dados', description: 'Exporte ou limpe dados', Icon: Database }
 ];
 
 const tabDescriptions: Record<TabType, string> = {
   perfil: 'Gerencie suas informações',
-  aparencia: 'Personalize a interface',
   dados: 'Exporte ou limpe dados'
 };
 
@@ -82,17 +86,17 @@ const splitFullName = (value: string) => {
 };
 
 const getProfileErrorMessage = (error: unknown, fallback: string) => {
-  const clerkError = error as {
+  const authError = error as {
     errors?: Array<{ longMessage?: string; message?: string }>;
     message?: string;
   };
-  const firstClerkError = clerkError?.errors?.[0];
+  const firstAuthError = authError?.errors?.[0];
 
   return (
-    firstClerkError?.longMessage ||
-    firstClerkError?.message ||
+    firstAuthError?.longMessage ||
+    firstAuthError?.message ||
     (error instanceof Error ? error.message : '') ||
-    clerkError?.message ||
+    authError?.message ||
     fallback
   );
 };
@@ -186,7 +190,7 @@ const SettingsSidebar = ({
   onSelect: (tab: TabType) => void;
 }) => (
   <aside className="settings-sidebar box-border h-auto w-full min-w-0 shrink-0 md:h-full md:w-full">
-    <nav className="settings-sidebar-nav box-border grid w-full min-w-0 grid-cols-3 gap-2 md:flex md:flex-col md:gap-4">
+    <nav className="settings-sidebar-nav box-border grid w-full min-w-0 grid-cols-2 gap-2 md:flex md:flex-col md:gap-4">
       {sidebarTabs.map(({ id, label, description, Icon }) => (
         <button
           key={id}
@@ -493,42 +497,6 @@ const BillingStatusCard = ({
   );
 };
 
-const ThemeOption = ({
-  label,
-  theme,
-  isActive,
-  onSelect,
-  shellClassName,
-  swatchClassName,
-  labelClassName
-}: {
-  label: string;
-  theme: AppTheme;
-  isActive: boolean;
-  onSelect: (theme: AppTheme) => void;
-  shellClassName: string;
-  swatchClassName: string;
-  labelClassName: string;
-}) => (
-  <button
-    type="button"
-    aria-pressed={isActive}
-    onClick={() => onSelect(theme)}
-    className={cx(
-      'settings-theme-option box-border inline-flex min-h-40 w-full min-w-0 items-center justify-center rounded-[1.35rem] !p-5 transition-all sm:min-h-44 sm:!p-6 lg:!p-7',
-      isActive && 'is-active',
-      shellClassName
-    )}
-  >
-    <span className="box-border flex w-full min-w-0 flex-col items-center justify-center gap-4">
-      <span className={cx('h-16 w-16 shrink-0 rounded-full border', swatchClassName)} />
-      <span className={cx('min-w-0 text-center text-base font-semibold leading-6', labelClassName)}>
-        {label}
-      </span>
-    </span>
-  </button>
-);
-
 export const SettingsModal: React.FC<SettingsModalProps> = ({
   isOpen,
   onClose,
@@ -537,13 +505,9 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   billingLoadState,
   billingError,
   onOpenPlans,
-  onManageSubscription,
-  appTheme,
-  onThemeChange
+  onManageSubscription
 }) => {
-  const { user } = useUser();
-  const clerk = useClerk();
-  const { signOut } = useAuth();
+  const [user] = useState<DisabledAuthUser | null>(null);
   const [activeTab, setActiveTab] = useState<TabType>('perfil');
   const [profileName, setProfileName] = useState('');
   const [profileImagePreview, setProfileImagePreview] = useState<string | null>(null);
@@ -670,12 +634,14 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   };
 
   const handleOpenSecurityProfile = () => {
-    clerk.openUserProfile({ __experimental_startPath: '/security' });
+    setProfileFeedback({
+      tone: 'error',
+      message: 'Login e seguranca estao temporariamente desabilitados.'
+    });
   };
 
   const handleLogout = async () => {
     onClose();
-    await signOut();
   };
 
   return (
@@ -817,57 +783,6 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   </ActionButton>
                 </SectionRow>
               </SettingsCard>
-            </motion.div>
-          )}
-
-          {activeTab === 'aparencia' && (
-            <motion.div
-              key="aparencia"
-              {...fadeMotion}
-              className="settings-tab-panel box-border flex w-full min-w-0 flex-col gap-5 sm:gap-6"
-            >
-              <SettingsCard className="settings-appearance-card">
-                <SectionRow className="sm:flex-row sm:items-start sm:justify-between">
-                  <CardHeader
-                    title="Tema do Aplicativo (EM DESENVOLVIMENTO)"
-                    description="Escolha a aparência principal do Synapse IA."
-                  />
-
-                </SectionRow>
-
-                <div className="box-border grid w-full min-w-0 grid-cols-1 gap-4 sm:grid-cols-3 lg:gap-5">
-                  <ThemeOption
-                    label="Escuro Neon"
-                    theme="neon-dark"
-                    isActive={appTheme === 'neon-dark'}
-                    onSelect={onThemeChange}
-                    shellClassName="border-purple-500/50 bg-purple-500/10 hover:bg-purple-500/15"
-                    swatchClassName="border-purple-500 bg-black shadow-[0_0_15px_rgba(168,85,247,0.5)]"
-                    labelClassName="text-purple-400"
-                  />
-
-                  <ThemeOption
-                    label="Claro"
-                    theme="light"
-                    isActive={appTheme === 'light'}
-                    onSelect={onThemeChange}
-                    shellClassName="border-slate-200 bg-white hover:bg-slate-50"
-                    swatchClassName="border-slate-200 bg-white shadow-[0_0_15px_rgba(168,85,247,0.5)]"
-                    labelClassName="text-white"
-                  />
-
-                  <ThemeOption
-                    label="Off White"
-                    theme="paper"
-                    isActive={appTheme === 'paper'}
-                    onSelect={onThemeChange}
-                    shellClassName="border-[#D8CBB8] bg-[#FFFAF0] hover:bg-[#fff7e6]"
-                    swatchClassName="border-[#D8CBB8] bg-[#E9D9C8] shadow-[0_0_15px_rgba(168,85,247,0.5)]"
-                    labelClassName="text-white"
-                  />
-                </div>
-              </SettingsCard>
-
             </motion.div>
           )}
 

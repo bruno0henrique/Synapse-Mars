@@ -1,5 +1,5 @@
 import { getSql } from '../server/db.js';
-import { parseBody, requireClerkUser } from '../server/request.js';
+import { parseBody, requireAuthenticatedUser } from '../server/request.js';
 
 const GENERIC_DELETE_PROJECT_ERROR = 'Nao foi possivel excluir projeto';
 
@@ -18,7 +18,7 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
-    const { userId } = await requireClerkUser(req);
+    const { userId } = await requireAuthenticatedUser(req);
     const sql = getSql();
     const body = parseBody(req.body);
     const projectId = typeof body.projectId === 'string' ? body.projectId : '';

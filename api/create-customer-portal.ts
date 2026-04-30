@@ -1,6 +1,6 @@
 import { ensureBillingAccount } from '../server/billing.js';
 import { getSql } from '../server/db.js';
-import { getAppOrigin, requireClerkUser, setCorsHeaders } from '../server/request.js';
+import { getAppOrigin, requireAuthenticatedUser, setCorsHeaders } from '../server/request.js';
 import { getStripeClient } from '../server/stripe.js';
 
 const GENERIC_ERROR = 'Nao foi possivel abrir gerenciamento';
@@ -17,7 +17,7 @@ export default async function handler(req: any, res: any) {
   }
 
   try {
-    const { userId } = await requireClerkUser(req);
+    const { userId } = await requireAuthenticatedUser(req);
     const sql = getSql();
     const billingRow = await ensureBillingAccount(sql, userId);
 

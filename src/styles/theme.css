@@ -117,6 +117,48 @@
   --border: #D8CBB8;
 }
 
+:root[data-app-theme="mars-enterprise"] {
+  --app-background: #F8FAFC;
+  --app-surface: #FFFFFF;
+  --app-surface-soft: #EEF4FF;
+  --app-border: #D8E1F0;
+  --app-text: #101828;
+  --app-muted-text: #475467;
+  --app-text-muted: #475467;
+  --app-text-subtle: #667085;
+  --app-primary: #0617A8;
+  --app-secondary: #0E2BC2;
+  --app-accent: #10BFA3;
+  --app-dot: rgba(16, 24, 40, 0.08);
+  --app-grid-line: rgba(6, 23, 168, 0.07);
+  --app-shadow: rgba(16, 24, 40, 0.12);
+  --app-glow: rgba(6, 23, 168, 0.12);
+  --app-canvas-ambient:
+    radial-gradient(ellipse 72% 58% at 50% 44%, rgba(6, 23, 168, 0.045) 0%, transparent 76%),
+    radial-gradient(circle at 88% 18%, rgba(16, 191, 163, 0.10), transparent 28%);
+  --app-overlay: rgba(16, 24, 40, 0.26);
+  --app-card-shadow: 0 20px 56px var(--app-shadow);
+  --app-paper-texture:
+    radial-gradient(circle at 16% 12%, rgba(6, 23, 168, 0.045) 0 1px, transparent 1px),
+    radial-gradient(circle at 76% 38%, rgba(16, 191, 163, 0.055) 0 1px, transparent 1px),
+    linear-gradient(135deg, rgba(255, 255, 255, 0.86), transparent 42%);
+  --background: #F8FAFC;
+  --foreground: #101828;
+  --card: #FFFFFF;
+  --card-foreground: #101828;
+  --primary: #0617A8;
+  --primary-foreground: #FFFFFF;
+  --secondary: #EEF4FF;
+  --secondary-foreground: #0617A8;
+  --muted: #EEF2F7;
+  --muted-foreground: #667085;
+  --accent: #DDFBF5;
+  --accent-foreground: #0F766E;
+  --border: #D8E1F0;
+  --input-background: #FFFFFF;
+  --ring: #0E2BC2;
+}
+
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);

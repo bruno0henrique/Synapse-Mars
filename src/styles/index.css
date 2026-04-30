@@ -549,7 +549,8 @@ body {
   outline-offset: 3px;
 }
 
-.btn-sync:disabled {
+.btn-sync:disabled,
+.btn-create-account:disabled {
   opacity: 0.7;
   cursor: not-allowed;
   transform: none;
@@ -4441,6 +4442,663 @@ button:focus, input:focus {
     right: 76px;
     max-width: 36vw;
     transform: translateY(-50%);
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
+:root[data-app-theme="mars-enterprise"] body {
+  color: var(--app-text);
+}
+
+:root[data-app-theme="mars-enterprise"] .app-container {
+  background-color: var(--app-background);
+  background-image: var(--app-paper-texture);
+}
+
+:root[data-app-theme="mars-enterprise"] .app-container:not(.auth-screen)::before {
+  content: "Mars";
+  position: absolute;
+  top: 78px;
+  right: 24px;
+  z-index: 2;
+  pointer-events: none;
+  color: var(--app-primary);
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0;
+  opacity: 0.12;
+}
+
+:root[data-app-theme="mars-enterprise"] .auth-screen {
+  align-items: center;
+  justify-content: center;
+  padding: clamp(16px, 3vw, 34px);
+  background:
+    radial-gradient(circle at 18% 18%, rgba(6, 23, 168, 0.10), transparent 34%),
+    radial-gradient(circle at 86% 74%, rgba(16, 191, 163, 0.12), transparent 30%),
+    linear-gradient(180deg, #ffffff, var(--app-background));
+}
+
+:root[data-app-theme="mars-enterprise"] .auth-screen__grid {
+  opacity: 0.48;
+  background-image: radial-gradient(rgba(16, 24, 40, 0.14) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+:root[data-app-theme="mars-enterprise"] .auth-screen__glow {
+  background:
+    radial-gradient(ellipse 72% 46% at 52% 52%, rgba(6, 23, 168, 0.06), transparent 72%),
+    linear-gradient(180deg, transparent, rgba(6, 23, 168, 0.035));
+}
+
+:root[data-app-theme="mars-enterprise"] .auth-shell {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 1080px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(340px, 430px);
+  gap: clamp(18px, 3vw, 34px);
+  align-items: stretch;
+}
+
+:root[data-app-theme="mars-enterprise"] .auth-enterprise-panel,
+:root[data-app-theme="mars-enterprise"] .auth-card {
+  border: 1px solid color-mix(in srgb, var(--app-primary) 12%, var(--app-border));
+  background:
+    radial-gradient(circle at 12% 0%, rgba(6, 23, 168, 0.08), transparent 34%),
+    radial-gradient(circle at 94% 12%, rgba(16, 191, 163, 0.09), transparent 26%),
+    rgba(255, 255, 255, 0.90);
+  box-shadow:
+    0 28px 70px rgba(16, 24, 40, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(18px);
+}
+
+:root[data-app-theme="mars-enterprise"] .auth-enterprise-panel {
+  display: flex;
+  min-height: 560px;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 28px;
+  box-sizing: border-box;
+  padding: clamp(26px, 4vw, 44px);
+  border-radius: 30px;
+}
+
+:root[data-app-theme="mars-enterprise"] .auth-enterprise-panel__brand,
+:root[data-app-theme="mars-enterprise"] .auth-enterprise-panel__synapse,
+:root[data-app-theme="mars-enterprise"] .mars-brand-chip {
+  display: inline-flex;
+  align-items: center;
+}
+
+:root[data-app-theme="mars-enterprise"] .auth-enterprise-panel__brand {
+  justify-content: space-between;
+  gap: 14px;
+}
+
+:root[data-app-theme="mars-enterprise"] .auth-enterprise-panel__synapse {
+  gap: 10px;
+  color: var(--app-primary);
+  font-size: 14px;
+  font-weight: 900;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+:root[data-app-theme="mars-enterprise"] .auth-enterprise-panel__copy {
+  display: flex;
+  max-width: 640px;
+  flex-direction: column;
+  gap: 16px;
+}
+
+:root[data-app-theme="mars-enterprise"] .auth-enterprise-panel__eyebrow,
+:root[data-app-theme="mars-enterprise"] .auth-card__eyebrow {
+  width: fit-content;
+  border-color: color-mix(in srgb, var(--app-accent) 34%, var(--app-border));
+  background: color-mix(in srgb, var(--app-accent) 12%, #ffffff);
+  color: #0f766e;
+  box-shadow: none;
+}
+
+:root[data-app-theme="mars-enterprise"] .auth-enterprise-panel__copy h1 {
+  margin: 0;
+  color: var(--app-text);
+  font-size: clamp(42px, 7vw, 76px);
+  font-weight: 900;
+  line-height: 0.96;
+  letter-spacing: 0;
+  text-wrap: balance;
+}
+
+:root[data-app-theme="mars-enterprise"] .auth-enterprise-panel__copy p,
+:root[data-app-theme="mars-enterprise"] .auth-card__copy p {
+  color: var(--app-muted-text);
+}
+
+:root[data-app-theme="mars-enterprise"] .enterprise-integrations {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+:root[data-app-theme="mars-enterprise"] .enterprise-integration-card {
+  display: flex;
+  min-width: 0;
+  gap: 12px;
+  box-sizing: border-box;
+  padding: 14px;
+  border: 1px solid var(--app-border);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.78);
+  box-shadow: 0 12px 30px rgba(16, 24, 40, 0.07);
+}
+
+:root[data-app-theme="mars-enterprise"] .enterprise-integration-card__icon {
+  width: 38px;
+  height: 38px;
+  display: inline-flex;
+  flex: 0 0 38px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--app-primary) 9%, #ffffff);
+  color: var(--app-primary);
+}
+
+:root[data-app-theme="mars-enterprise"] .enterprise-integration-card__copy {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 4px;
+}
+
+:root[data-app-theme="mars-enterprise"] .enterprise-integration-card strong {
+  color: var(--app-text);
+  font-size: 13px;
+  font-weight: 900;
+  line-height: 1.2;
+}
+
+:root[data-app-theme="mars-enterprise"] .enterprise-integration-card span span {
+  color: var(--app-muted-text);
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+
+:root[data-app-theme="mars-enterprise"] .auth-card {
+  justify-content: center;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(6, 23, 168, 0.08), transparent 38%),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.94), rgba(248, 250, 252, 0.90));
+}
+
+:root[data-app-theme="mars-enterprise"] .auth-card__brand {
+  flex-wrap: wrap;
+}
+
+:root[data-app-theme="mars-enterprise"] .auth-card__logo {
+  border-color: color-mix(in srgb, var(--app-primary) 18%, var(--app-border));
+  background: color-mix(in srgb, var(--app-primary) 9%, #ffffff);
+  color: var(--app-primary);
+  box-shadow: none;
+}
+
+:root[data-app-theme="mars-enterprise"] .auth-card__brand-name,
+:root[data-app-theme="mars-enterprise"] .auth-card__copy h2 {
+  color: var(--app-text);
+}
+
+:root[data-app-theme="mars-enterprise"] .auth-card__mars-wordmark {
+  min-height: 28px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 5px 10px;
+  background: #0617a8;
+  color: #ffffff;
+  font-size: 11px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+:root[data-app-theme="mars-enterprise"] .auth-card__divider span {
+  background: linear-gradient(90deg, transparent, rgba(6, 23, 168, 0.18), transparent);
+}
+
+:root[data-app-theme="mars-enterprise"] .btn-sync {
+  border-color: color-mix(in srgb, var(--app-primary) 22%, var(--app-border));
+  background:
+    radial-gradient(circle at 18% 18%, rgba(255, 255, 255, 0.20), transparent 32%),
+    linear-gradient(135deg, #0617a8, #0e2bc2);
+  color: #ffffff;
+  box-shadow: 0 18px 38px rgba(6, 23, 168, 0.24);
+}
+
+:root[data-app-theme="mars-enterprise"] .btn-sync:hover {
+  background: linear-gradient(135deg, #071fc0, #173cd6);
+  box-shadow: 0 20px 44px rgba(6, 23, 168, 0.28);
+}
+
+:root[data-app-theme="mars-enterprise"] .btn-create-account {
+  border-color: var(--app-border);
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--app-primary);
+  box-shadow: 0 12px 28px rgba(16, 24, 40, 0.08);
+}
+
+:root[data-app-theme="mars-enterprise"] .btn-create-account:hover {
+  border-color: color-mix(in srgb, var(--app-primary) 28%, var(--app-border));
+  background: #ffffff;
+  color: var(--app-primary);
+}
+
+:root[data-app-theme="mars-enterprise"] .mars-brand-chip {
+  min-height: 32px;
+  max-width: 160px;
+  gap: 8px;
+  box-sizing: border-box;
+  padding: 5px 10px 5px 6px;
+  border: 1px solid color-mix(in srgb, var(--app-primary) 16%, var(--app-border));
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.78);
+  color: var(--app-primary);
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1;
+  white-space: nowrap;
+  box-shadow: 0 10px 24px rgba(16, 24, 40, 0.08);
+}
+
+:root[data-app-theme="mars-enterprise"] .mars-brand-chip--panel {
+  max-width: none;
+}
+
+:root[data-app-theme="mars-enterprise"] .mars-mark {
+  width: 22px;
+  height: 22px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #0617a8 0 50%, #10bfa3 50% 100%);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+:root[data-app-theme="mars-enterprise"] .app-loading-screen {
+  background:
+    radial-gradient(circle at 50% 18%, rgba(6, 23, 168, 0.10), transparent 34%),
+    radial-gradient(circle at 16% 82%, rgba(16, 191, 163, 0.11), transparent 28%),
+    var(--app-background);
+}
+
+:root[data-app-theme="mars-enterprise"] .app-loading-screen::before {
+  background-image: radial-gradient(rgba(16, 24, 40, 0.14) 1px, transparent 1px);
+}
+
+:root[data-app-theme="mars-enterprise"] .app-loading-card,
+:root[data-app-theme="mars-enterprise"] .empty-state-card,
+:root[data-app-theme="mars-enterprise"] .workspaces-modal,
+:root[data-app-theme="mars-enterprise"] [aria-labelledby="settings-title"] {
+  border-color: var(--app-border) !important;
+  background:
+    var(--app-paper-texture),
+    linear-gradient(180deg, rgba(255, 255, 255, 0.96), rgba(248, 250, 252, 0.90)) !important;
+  color: var(--app-text);
+  box-shadow: var(--app-card-shadow) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .app-loading-orb,
+:root[data-app-theme="mars-enterprise"] .empty-state-icon-frame,
+:root[data-app-theme="mars-enterprise"] .settings-header-icon,
+:root[data-app-theme="mars-enterprise"] .settings-section-icon,
+:root[data-app-theme="mars-enterprise"] .settings-plan-icon {
+  border-color: color-mix(in srgb, var(--app-primary) 18%, var(--app-border));
+  background: color-mix(in srgb, var(--app-primary) 9%, #ffffff);
+  color: var(--app-primary);
+  box-shadow: none;
+}
+
+:root[data-app-theme="mars-enterprise"] .app-loading-copy h1,
+:root[data-app-theme="mars-enterprise"] .app-loading-copy p,
+:root[data-app-theme="mars-enterprise"] .app-loading-step,
+:root[data-app-theme="mars-enterprise"] .empty-state-copy h2,
+:root[data-app-theme="mars-enterprise"] .empty-state-step-card h3,
+:root[data-app-theme="mars-enterprise"] .workspaces-modal-heading h2,
+:root[data-app-theme="mars-enterprise"] .settings-header h2,
+:root[data-app-theme="mars-enterprise"] .settings-card h3,
+:root[data-app-theme="mars-enterprise"] .text-white {
+  color: var(--app-text) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .text-purple-300,
+:root[data-app-theme="mars-enterprise"] .text-purple-400,
+:root[data-app-theme="mars-enterprise"] .text-purple-500 {
+  color: var(--app-primary) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .app-loading-copy p,
+:root[data-app-theme="mars-enterprise"] .empty-state-copy p,
+:root[data-app-theme="mars-enterprise"] .empty-state-step-card p,
+:root[data-app-theme="mars-enterprise"] .workspaces-modal-heading p,
+:root[data-app-theme="mars-enterprise"] .workspaces-project-copy p,
+:root[data-app-theme="mars-enterprise"] .settings-header p,
+:root[data-app-theme="mars-enterprise"] .settings-card p,
+:root[data-app-theme="mars-enterprise"] .text-gray-400,
+:root[data-app-theme="mars-enterprise"] .text-gray-500,
+:root[data-app-theme="mars-enterprise"] .text-gray-600 {
+  color: var(--app-muted-text) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .app-loading-eyebrow,
+:root[data-app-theme="mars-enterprise"] .empty-state-kicker {
+  border-color: color-mix(in srgb, var(--app-accent) 32%, var(--app-border));
+  background: color-mix(in srgb, var(--app-accent) 12%, #ffffff);
+  color: #0f766e;
+  box-shadow: none;
+}
+
+:root[data-app-theme="mars-enterprise"] .app-loading-step {
+  border-color: var(--app-border);
+  background: rgba(255, 255, 255, 0.72);
+}
+
+:root[data-app-theme="mars-enterprise"] .app-loading-step.is-active,
+:root[data-app-theme="mars-enterprise"] .app-loading-step.is-done {
+  border-color: color-mix(in srgb, var(--app-primary) 22%, var(--app-border));
+  color: var(--app-primary);
+  background: color-mix(in srgb, var(--app-primary) 8%, #ffffff);
+}
+
+:root[data-app-theme="mars-enterprise"] .app-loading-step.is-active .app-loading-step-dot,
+:root[data-app-theme="mars-enterprise"] .app-loading-step.is-done .app-loading-step-dot {
+  background: var(--app-primary);
+  box-shadow: 0 0 14px rgba(6, 23, 168, 0.22);
+}
+
+:root[data-app-theme="mars-enterprise"] .app-loading-progress {
+  background: rgba(6, 23, 168, 0.08);
+}
+
+:root[data-app-theme="mars-enterprise"] .app-loading-progress::after {
+  background: linear-gradient(90deg, rgba(6, 23, 168, 0), rgba(6, 23, 168, 0.82), rgba(16, 191, 163, 0.38));
+  box-shadow: 0 0 18px rgba(6, 23, 168, 0.18);
+}
+
+:root[data-app-theme="mars-enterprise"] .app-header {
+  background: rgba(255, 255, 255, 0.88);
+  border-bottom-color: var(--app-border);
+  color: var(--app-text);
+  box-shadow: 0 10px 26px rgba(16, 24, 40, 0.08);
+}
+
+:root[data-app-theme="mars-enterprise"] .app-header h1,
+:root[data-app-theme="mars-enterprise"] .app-header svg,
+:root[data-app-theme="mars-enterprise"] .app-header button svg {
+  color: var(--app-primary) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .app-help-button,
+:root[data-app-theme="mars-enterprise"] .ai-quota-pill,
+:root[data-app-theme="mars-enterprise"] .app-bottom-nav,
+:root[data-app-theme="mars-enterprise"] .app-input-bar,
+:root[data-app-theme="mars-enterprise"] .canvas-toolbar,
+:root[data-app-theme="mars-enterprise"] .canvas-toolbar-toggle,
+:root[data-app-theme="mars-enterprise"] .canvas-export-popover,
+:root[data-app-theme="mars-enterprise"] .export-sheet__panel {
+  border-color: var(--app-border) !important;
+  background: rgba(255, 255, 255, 0.88) !important;
+  color: var(--app-text) !important;
+  box-shadow: 0 14px 34px rgba(16, 24, 40, 0.11) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .ai-quota-icon,
+:root[data-app-theme="mars-enterprise"] .app-input-action,
+:root[data-app-theme="mars-enterprise"] .canvas-toolbar__button,
+:root[data-app-theme="mars-enterprise"] .export-option__icon {
+  background: color-mix(in srgb, var(--app-primary) 9%, #ffffff) !important;
+  border-color: color-mix(in srgb, var(--app-primary) 16%, var(--app-border)) !important;
+  color: var(--app-primary) !important;
+  box-shadow: none !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .canvas-toolbar__button {
+  border-bottom-color: var(--app-border) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .canvas-toolbar__button:hover,
+:root[data-app-theme="mars-enterprise"] .canvas-toolbar__button:focus-visible,
+:root[data-app-theme="mars-enterprise"] .canvas-toolbar__button.is-active,
+:root[data-app-theme="mars-enterprise"] .app-help-button:hover,
+:root[data-app-theme="mars-enterprise"] .app-help-button.is-active,
+:root[data-app-theme="mars-enterprise"] .app-bottom-nav__button.is-active {
+  background: color-mix(in srgb, var(--app-primary) 12%, #ffffff) !important;
+  color: var(--app-primary) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--app-primary) 20%, var(--app-border)) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .ai-quota-label,
+:root[data-app-theme="mars-enterprise"] .ai-quota-reset,
+:root[data-app-theme="mars-enterprise"] .app-input-field::placeholder {
+  color: var(--app-text-subtle) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .ai-quota-pill strong,
+:root[data-app-theme="mars-enterprise"] .app-input-field {
+  color: var(--app-text) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .synapse-canvas-root {
+  background: var(--app-background);
+}
+
+:root[data-app-theme="mars-enterprise"] .synapse-canvas-grid {
+  opacity: 0.72;
+}
+
+:root[data-app-theme="mars-enterprise"] .cartesian-guide-axis {
+  background: repeating-linear-gradient(
+    90deg,
+    var(--app-grid-line) 0 4px,
+    transparent 4px 12px
+  ) !important;
+  filter: none;
+}
+
+:root[data-app-theme="mars-enterprise"] .cartesian-guide-axis-y {
+  background: repeating-linear-gradient(
+    0deg,
+    var(--app-grid-line) 0 4px,
+    transparent 4px 12px
+  ) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .cartesian-guide-origin {
+  background: var(--app-primary) !important;
+  box-shadow: 0 0 12px rgba(6, 23, 168, 0.22) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .empty-state-aura {
+  background:
+    radial-gradient(circle at 50% 6%, rgba(6, 23, 168, 0.08), transparent 34%),
+    radial-gradient(circle at 50% 50%, rgba(16, 191, 163, 0.08), transparent 56%);
+}
+
+:root[data-app-theme="mars-enterprise"] .empty-state-step-card,
+:root[data-app-theme="mars-enterprise"] .workspaces-project-card,
+:root[data-app-theme="mars-enterprise"] .settings-card {
+  border-color: var(--app-border) !important;
+  background:
+    var(--app-paper-texture),
+    rgba(255, 255, 255, 0.86) !important;
+  box-shadow: 0 16px 40px rgba(16, 24, 40, 0.08) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .empty-state-step-icon,
+:root[data-app-theme="mars-enterprise"] .settings-tab-icon,
+:root[data-app-theme="mars-enterprise"] .settings-avatar-badge {
+  background: color-mix(in srgb, var(--app-primary) 9%, #ffffff) !important;
+  color: var(--app-primary) !important;
+  box-shadow: none !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .empty-state-cta {
+  border-color: color-mix(in srgb, var(--app-primary) 22%, var(--app-border));
+  background: color-mix(in srgb, var(--app-primary) 8%, #ffffff);
+  color: var(--app-primary);
+  box-shadow: none;
+}
+
+:root[data-app-theme="mars-enterprise"] .idea-balloon-card {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(6, 23, 168, 0.06), transparent 34%),
+    radial-gradient(circle at 82% 0%, rgba(16, 191, 163, 0.08), transparent 30%),
+    rgba(255, 255, 255, 0.92) !important;
+  border-color: var(--app-border) !important;
+  color: var(--app-text);
+  box-shadow:
+    0 18px 46px rgba(16, 24, 40, 0.13),
+    0 0 0 1px rgba(6, 23, 168, 0.04) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .idea-balloon-root p,
+:root[data-app-theme="mars-enterprise"] .idea-balloon-root textarea,
+:root[data-app-theme="mars-enterprise"] .idea-balloon-root input {
+  color: var(--app-text) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .idea-balloon-root textarea,
+:root[data-app-theme="mars-enterprise"] .idea-balloon-root input,
+:root[data-app-theme="mars-enterprise"] .settings-input,
+:root[data-app-theme="mars-enterprise"] input,
+:root[data-app-theme="mars-enterprise"] textarea {
+  border-color: var(--app-border) !important;
+  background: rgba(255, 255, 255, 0.88) !important;
+  color: var(--app-text) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .idea-ai-menu,
+:root[data-app-theme="mars-enterprise"] .idea-category-menu,
+:root[data-app-theme="mars-enterprise"] .idea-delete-menu {
+  border-color: var(--app-border) !important;
+  background: rgba(255, 255, 255, 0.96) !important;
+  color: var(--app-text) !important;
+  box-shadow: 0 22px 60px rgba(16, 24, 40, 0.16) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .idea-ai-menu p,
+:root[data-app-theme="mars-enterprise"] .idea-category-menu span,
+:root[data-app-theme="mars-enterprise"] .idea-delete-menu p,
+:root[data-app-theme="mars-enterprise"] .idea-delete-menu .text-white,
+:root[data-app-theme="mars-enterprise"] .idea-delete-menu .text-gray-400 {
+  color: var(--app-text) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .neuron-selection-dot {
+  background: #ffffff;
+  box-shadow:
+    0 0 6px #ffffff,
+    0 0 14px currentColor;
+}
+
+:root[data-app-theme="mars-enterprise"] .synapse-connecting-hint {
+  border-color: color-mix(in srgb, var(--app-primary) 24%, var(--app-border)) !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: var(--app-primary) !important;
+  box-shadow: 0 12px 26px rgba(16, 24, 40, 0.10);
+}
+
+:root[data-app-theme="mars-enterprise"] .settings-modal-overlay,
+:root[data-app-theme="mars-enterprise"] .workspaces-modal-overlay,
+:root[data-app-theme="mars-enterprise"] .fixed > .absolute.inset-0 {
+  background: var(--app-overlay) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] [aria-labelledby="settings-title"] aside,
+:root[data-app-theme="mars-enterprise"] [aria-labelledby="settings-title"] section {
+  border-color: var(--app-border) !important;
+  background: rgba(255, 255, 255, 0.80) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .settings-tab-button.is-active {
+  background: color-mix(in srgb, var(--app-primary) 9%, #ffffff) !important;
+  color: var(--app-primary) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--app-primary) 18%, var(--app-border));
+}
+
+:root[data-app-theme="mars-enterprise"] .settings-action {
+  border-color: var(--app-border);
+  background: rgba(255, 255, 255, 0.82);
+  color: var(--app-primary);
+  box-shadow: 0 12px 26px rgba(16, 24, 40, 0.08);
+}
+
+:root[data-app-theme="mars-enterprise"] .settings-action--primary {
+  border-color: color-mix(in srgb, var(--app-primary) 24%, var(--app-border));
+  background: linear-gradient(135deg, #0617a8, #0e2bc2);
+  color: #ffffff;
+  box-shadow: 0 16px 34px rgba(6, 23, 168, 0.22);
+}
+
+:root[data-app-theme="mars-enterprise"] .settings-action--danger,
+:root[data-app-theme="mars-enterprise"] .settings-action--danger-soft {
+  border-color: rgba(220, 38, 38, 0.24);
+  background: rgba(254, 226, 226, 0.74);
+  color: #b42318;
+}
+
+@media (max-width: 900px) {
+  :root[data-app-theme="mars-enterprise"] .auth-shell {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  :root[data-app-theme="mars-enterprise"] .auth-enterprise-panel {
+    min-height: auto;
+  }
+}
+
+@media (max-width: 640px) {
+  :root[data-app-theme="mars-enterprise"] .app-container:not(.auth-screen)::before {
+    display: none;
+  }
+
+  :root[data-app-theme="mars-enterprise"] .auth-screen {
+    align-items: flex-start;
+    overflow-y: auto;
+  }
+
+  :root[data-app-theme="mars-enterprise"] .auth-enterprise-panel,
+  :root[data-app-theme="mars-enterprise"] .auth-card {
+    border-radius: 22px;
+  }
+
+  :root[data-app-theme="mars-enterprise"] .auth-enterprise-panel {
+    padding: 20px;
+    gap: 20px;
+  }
+
+  :root[data-app-theme="mars-enterprise"] .auth-enterprise-panel__brand {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  :root[data-app-theme="mars-enterprise"] .auth-enterprise-panel__copy h1 {
+    font-size: 40px;
+  }
+
+  :root[data-app-theme="mars-enterprise"] .enterprise-integrations {
+    grid-template-columns: 1fr;
+  }
+
+  :root[data-app-theme="mars-enterprise"] .mars-brand-chip {
+    max-width: 116px;
     overflow: hidden;
     text-overflow: ellipsis;
   }
