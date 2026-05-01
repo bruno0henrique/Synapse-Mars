@@ -137,17 +137,17 @@ function StatusCard({
   isLoading: boolean;
 }) {
   return (
-    <section className="box-border w-full min-w-0 rounded-[1.35rem] border border-purple-300/15 bg-white/[0.055] shadow-[0_20px_70px_rgba(0,0,0,0.28)] backdrop-blur-xl sm:rounded-[1.75rem]">
+    <section className="plans-status-card box-border w-full min-w-0 rounded-[1.35rem] border border-purple-300/15 bg-white/[0.055] shadow-[0_20px_70px_rgba(0,0,0,0.28)] backdrop-blur-xl sm:rounded-[1.75rem]">
       <div className="box-border flex w-full min-w-0 items-center gap-4 !p-4 sm:gap-5 sm:!p-5 lg:!p-6">
-        <span className="box-border inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-purple-300/15 bg-purple-500/15 !p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:h-14 sm:w-14">
+        <span className="plans-status-icon box-border inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-purple-300/15 bg-purple-500/15 !p-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)] sm:h-14 sm:w-14">
           <Clock className="text-purple-300" size={22} />
         </span>
 
         <div className="box-border flex min-w-0 flex-1 flex-col gap-1.5">
-          <p className="min-w-0 text-base font-bold leading-6 text-white sm:text-lg">
+          <p className="plans-status-title min-w-0 text-base font-bold leading-6 text-white sm:text-lg">
             {title}
           </p>
-          <p className="min-w-0 text-sm leading-6 text-gray-400">
+          <p className="plans-status-text min-w-0 text-sm leading-6 text-gray-400">
             {text}
           </p>
         </div>
@@ -176,19 +176,20 @@ function PriceBox({
   return (
     <section
       className={cx(
-        'box-border flex w-full min-w-0 flex-col gap-2.5 rounded-2xl border !p-4 sm:!p-5',
+        'plans-price-box box-border flex w-full min-w-0 flex-col gap-2.5 rounded-2xl border !p-4 sm:!p-5',
+        highlighted && 'is-highlighted',
         highlighted
           ? 'border-purple-300/25 bg-purple-500/[0.08] shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]'
           : 'border-white/10 bg-black/20'
       )}
     >
-      <p className="min-w-0 break-words text-2xl font-bold leading-8 text-white sm:text-3xl sm:leading-9">
+      <p className="plans-price-value min-w-0 break-words text-2xl font-bold leading-8 text-white sm:text-3xl sm:leading-9">
         {price}
       </p>
-      <p className="min-w-0 text-xs font-bold uppercase leading-5 tracking-widest text-purple-300">
+      <p className="plans-price-limit min-w-0 text-xs font-bold uppercase leading-5 tracking-widest text-purple-300">
         {usageLimit}
       </p>
-      <p className="min-w-0 text-sm leading-5 text-gray-400">
+      <p className="plans-price-benefit min-w-0 text-sm leading-5 text-gray-400">
         {benefit}
       </p>
     </section>
@@ -238,7 +239,9 @@ function PlanCard({
   return (
     <article
       className={cx(
-        'box-border flex h-full w-full min-w-0 rounded-[1.75rem] border bg-white/[0.045] shadow-[0_22px_70px_rgba(0,0,0,0.34)] backdrop-blur-xl transition-all duration-300 sm:rounded-[2rem]',
+        'plans-plan-card box-border flex h-full w-full min-w-0 rounded-[1.75rem] border bg-white/[0.045] shadow-[0_22px_70px_rgba(0,0,0,0.34)] backdrop-blur-xl transition-all duration-300 sm:rounded-[2rem]',
+        plan.highlighted && 'is-highlighted',
+        isCurrent && 'is-current',
         plan.highlighted
           ? 'border-purple-300/40 bg-purple-500/[0.07] shadow-[0_26px_80px_rgba(0,0,0,0.42),0_0_0_1px_rgba(216,180,254,0.10),0_0_34px_rgba(168,85,247,0.13)]'
           : 'border-white/10 hover:border-white/15 hover:bg-white/[0.06]'
@@ -248,7 +251,7 @@ function PlanCard({
         <header className="box-border flex w-full min-w-0 items-start justify-between gap-4">
           <span
             className={cx(
-              'box-border inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border !p-3',
+              'plans-plan-icon box-border inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border !p-3',
               plan.highlighted
                 ? 'border-purple-400/20 bg-purple-500/20'
                 : 'border-white/10 bg-white/10'
@@ -259,7 +262,9 @@ function PlanCard({
 
           <span
             className={cx(
-              'box-border inline-flex min-h-9 max-w-full shrink-0 items-center justify-center whitespace-nowrap rounded-full !px-3 !py-2 text-center text-[10px] font-bold uppercase leading-4 tracking-widest',
+              'plans-plan-badge box-border inline-flex min-h-9 max-w-full shrink-0 items-center justify-center whitespace-nowrap rounded-full !px-3 !py-2 text-center text-[10px] font-bold uppercase leading-4 tracking-widest',
+              isCurrent && 'is-current',
+              plan.highlighted && !isCurrent && 'is-highlighted',
               isCurrent
                 ? 'bg-emerald-500/15 text-emerald-300'
                 : plan.highlighted
@@ -272,10 +277,10 @@ function PlanCard({
         </header>
 
         <div className="box-border flex w-full min-w-0 flex-col gap-2.5">
-          <h3 className="min-w-0 text-2xl font-bold leading-8 tracking-tight text-white">
+          <h3 className="plans-plan-title min-w-0 text-2xl font-bold leading-8 tracking-tight text-white">
             {visual.name}
           </h3>
-          <p className="min-w-0 text-sm leading-6 text-gray-300">
+          <p className="plans-plan-detail min-w-0 text-sm leading-6 text-gray-300">
             {visual.detail}
           </p>
         </div>
@@ -293,7 +298,7 @@ function PlanCard({
               <span className="!mt-0.5 box-border inline-flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-emerald-500/10 !p-1.5">
                 <Check className="text-emerald-300" size={16} />
               </span>
-              <span className="min-w-0 text-sm leading-6 text-gray-300">{feature}</span>
+              <span className="plans-feature-text min-w-0 text-sm leading-6 text-gray-300">{feature}</span>
             </li>
           ))}
         </ul>
@@ -304,7 +309,9 @@ function PlanCard({
             disabled={disabled}
             onClick={handleClick}
             className={cx(
-              'box-border inline-flex min-h-[48px] w-full min-w-0 items-center justify-center rounded-2xl !px-5 !py-3 text-center text-sm font-bold leading-5 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-purple-300/45',
+              'plans-action-button box-border inline-flex min-h-[48px] w-full min-w-0 items-center justify-center rounded-2xl !px-5 !py-3 text-center text-sm font-bold leading-5 transition-all duration-200 focus-visible:ring-2 focus-visible:ring-purple-300/45',
+              plan.highlighted && !isCurrent && 'is-primary',
+              isCurrent && 'is-current',
               isCurrent
                 ? 'bg-white/10 text-white'
                 : plan.highlighted
@@ -347,27 +354,27 @@ export const PlansModal: React.FC<PlansModalProps> = ({
     .filter((plan): plan is (typeof PLAN_OPTIONS)[number] => Boolean(plan));
 
   return (
-    <div className="fixed inset-0 z-[110] box-border flex items-center justify-center !p-3 animate-in fade-in duration-300">
+    <div className="plans-modal-shell fixed inset-0 z-[110] box-border flex items-center justify-center !p-3 animate-in fade-in duration-300">
       <div
-        className="absolute inset-0 box-border bg-black/60 backdrop-blur-md"
+        className="plans-modal-overlay absolute inset-0 box-border bg-black/60 backdrop-blur-md"
         onClick={onClose}
       />
 
-      <div className="relative z-10 box-border flex max-h-[calc(100dvh-24px)] w-[calc(100vw-24px)] max-w-6xl min-w-0 flex-col overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#08070d]/80 shadow-[0_35px_120px_rgba(0,0,0,0.72)] backdrop-blur-2xl animate-in zoom-in-95 duration-300 sm:rounded-[2.25rem] lg:rounded-[2.5rem]">
-        <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(ellipse_at_top,rgba(168,85,247,0.16),transparent_68%)]" />
+      <div className="plans-modal-panel relative z-10 box-border flex max-h-[calc(100dvh-24px)] w-[calc(100vw-24px)] max-w-6xl min-w-0 flex-col overflow-hidden rounded-[1.75rem] border border-white/10 bg-[#08070d]/80 shadow-[0_35px_120px_rgba(0,0,0,0.72)] backdrop-blur-2xl animate-in zoom-in-95 duration-300 sm:rounded-[2.25rem] lg:rounded-[2.5rem]">
+        <div className="plans-modal-aura pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(ellipse_at_top,rgba(168,85,247,0.16),transparent_68%)]" />
         <div className="box-border flex min-h-0 w-full min-w-0 flex-col !p-4 sm:!p-6 lg:!p-8">
           <header className="box-border w-full min-w-0 shrink-0">
-            <div className="box-border flex w-full min-w-0 items-start justify-between gap-4 border-b border-white/5 !pb-4 sm:items-center sm:gap-6 sm:!pb-6">
+            <div className="plans-modal-header box-border flex w-full min-w-0 items-start justify-between gap-4 border-b border-white/5 !pb-4 sm:items-center sm:gap-6 sm:!pb-6">
               <div className="box-border flex min-w-0 items-center gap-4 sm:gap-5">
-                <span className="box-border inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.35rem] border border-purple-400/20 bg-purple-500/20 !p-3 sm:h-16 sm:w-16 sm:rounded-[1.5rem] sm:!p-4">
+                <span className="plans-header-icon box-border inline-flex h-14 w-14 shrink-0 items-center justify-center rounded-[1.35rem] border border-purple-400/20 bg-purple-500/20 !p-3 sm:h-16 sm:w-16 sm:rounded-[1.5rem] sm:!p-4">
                   <CreditCard className="text-purple-300" size={26} />
                 </span>
 
                 <div className="box-border flex min-w-0 flex-col gap-1.5">
-                  <h2 className="min-w-0 text-xl font-bold leading-7 tracking-tight text-white sm:text-2xl">
+                  <h2 className="plans-modal-title min-w-0 text-xl font-bold leading-7 tracking-tight text-white sm:text-2xl">
                     Planos Synapse IA
                   </h2>
-                  <p className="min-w-0 text-xs font-bold uppercase leading-5 tracking-widest text-purple-300">
+                  <p className="plans-modal-subtitle min-w-0 text-xs font-bold uppercase leading-5 tracking-widest text-purple-300">
                     Assinatura mensal
                   </p>
                 </div>
@@ -377,7 +384,7 @@ export const PlansModal: React.FC<PlansModalProps> = ({
                 type="button"
                 onClick={onClose}
                 aria-label="Fechar planos"
-                className="box-border inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/5 !p-3 text-gray-300 transition-colors hover:bg-white/10 hover:text-white sm:h-14 sm:w-14 sm:rounded-[1.35rem]"
+                className="plans-close-button box-border inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-white/10 bg-white/5 !p-3 text-gray-300 transition-colors hover:bg-white/10 hover:text-white sm:h-14 sm:w-14 sm:rounded-[1.35rem]"
               >
                 <X size={26} />
               </button>

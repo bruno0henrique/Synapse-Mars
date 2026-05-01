@@ -308,9 +308,10 @@ function categorizeIdea(text: string): string {
 
 
 export default function App() {
+  const [isDemoSignedIn, setIsDemoSignedIn] = useState(false);
   const isLoaded = true;
-  const isSignedIn = false;
-  const getToken = useCallback(async () => null, []);
+  const isSignedIn = isDemoSignedIn;
+  const getToken = useCallback(async () => 'demo-token', []);
   const [ideas, setIdeas] = useState<Idea[]>([]);
   const [projects, setProjects] = useState<Project[]>([]);
   const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
@@ -1209,21 +1210,16 @@ export default function App() {
           </div>
 
           <div className="auth-card__actions">
-              <button className="btn-sync" disabled title="Login temporariamente desabilitado">
-                LOGIN DESABILITADO
-              </button>
-
-            <div className="auth-card__divider">
-              <span />
-              <strong>ou</strong>
-              <span />
+                <button
+                  type="button"
+                  className="btn-sync"
+                  onClick={() => setIsDemoSignedIn(true)}
+                  title="Entrar com Okta Mars"
+                >
+                  <UserCircle size={20} />
+                  ENTRAR COM OKTA MARS
+                </button>
             </div>
-
-              <button className="btn-create-account" disabled title="Novo provedor de login sera configurado depois">
-                <UserCircle size={20} />
-                AGUARDANDO NOVO LOGIN
-              </button>
-          </div>
           </div>
         </div>
       </div>
@@ -1327,17 +1323,17 @@ export default function App() {
       />
 
       {/* Bottom Navigation Menu */}
-      <nav className="app-bottom-nav absolute bottom-4 left-1/2 -translate-x-1/2 z-[100] w-[90%] max-w-lg bg-white/5 backdrop-blur-xl border border-white/10 rounded-full h-16 flex items-center justify-around px-4 shadow-2xl">
-        <button onClick={() => setActiveNav('grid')} className={`app-bottom-nav__button p-3 rounded-full transition-all ${activeNav === 'grid' ? 'is-active bg-purple-500/20 text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.2)]' : 'text-gray-500 hover:text-gray-300'}`}>
+      <nav className="app-bottom-nav absolute bottom-4 left-1/2 -translate-x-1/2 z-[100] w-[90%] max-w-lg backdrop-blur-xl rounded-full h-16 flex items-center justify-around px-4">
+        <button onClick={() => setActiveNav('grid')} className={`app-bottom-nav__button p-3 rounded-full transition-all ${activeNav === 'grid' ? 'is-active' : ''}`}>
           <LayoutGrid size={22} />
         </button>
-        <button onClick={() => setActiveNav('status')} className={`app-bottom-nav__button p-3 rounded-full transition-all ${activeNav === 'status' ? 'is-active bg-purple-500/20 text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.2)]' : 'text-gray-500 hover:text-gray-300'}`}>
+        <button onClick={() => setActiveNav('status')} className={`app-bottom-nav__button p-3 rounded-full transition-all ${activeNav === 'status' ? 'is-active' : ''}`}>
           <Activity size={22} />
         </button>
-        <button onClick={() => setActiveNav('folders')} className={`app-bottom-nav__button p-3 rounded-full transition-all ${activeNav === 'folders' ? 'is-active bg-purple-500/20 text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.2)]' : 'text-gray-500 hover:text-gray-300'}`}>
+        <button onClick={() => setActiveNav('folders')} className={`app-bottom-nav__button p-3 rounded-full transition-all ${activeNav === 'folders' ? 'is-active' : ''}`}>
           <Folder size={22} />
         </button>
-        <button onClick={() => setActiveNav('settings')} className={`app-bottom-nav__button p-3 rounded-full transition-all ${activeNav === 'settings' ? 'is-active bg-purple-500/20 text-purple-400 shadow-[0_0_15px_rgba(168,85,247,0.2)]' : 'text-gray-500 hover:text-gray-300'}`}>
+        <button onClick={() => setActiveNav('settings')} className={`app-bottom-nav__button p-3 rounded-full transition-all ${activeNav === 'settings' ? 'is-active' : ''}`}>
           <Settings size={22} />
         </button>
       </nav>

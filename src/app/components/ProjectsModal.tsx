@@ -160,6 +160,20 @@ export const ProjectsModal: React.FC<ProjectsModalProps> = ({
             </form>
           )}
 
+          {!isCreating && projects.length === 0 && (
+            <div className="workspaces-empty-state">
+              <span className="workspaces-empty-icon" aria-hidden="true">
+                <Folder size={34} />
+              </span>
+              <h3>Nenhum workspace ainda</h3>
+              <p>Crie um workspace para organizar seus mapas de ideias.</p>
+              <button type="button" onClick={handleStartCreate} className="workspaces-primary-button">
+                <Plus size={16} />
+                Criar workspace
+              </button>
+            </div>
+          )}
+
           {!isCreating && projects.map(proj => {
             const isActive = proj.id === activeProjectId;
             return (

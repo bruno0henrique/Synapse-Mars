@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, ReactNode } from 'react';
-import { GitBranch, Lightbulb, PenLine, Sparkles, X } from 'lucide-react';
+import { Brain, GitBranch, Lightbulb, PenLine, Sparkles, X } from 'lucide-react';
 import { IdeaBalloon } from './IdeaBalloon';
 import { Idea } from '../App';
 
@@ -425,7 +425,7 @@ export function BrainstormBoard({
             <line
               x1={connectingLine.x1} y1={connectingLine.y1}
               x2={connectingLine.x2} y2={connectingLine.y2}
-              stroke="#8b5cf6" strokeWidth="2" strokeDasharray="6 4"
+              stroke="var(--app-primary)" strokeWidth="2" strokeDasharray="6 4"
               opacity="0.7" filter="url(#glow)"
             />
           )}
@@ -475,12 +475,7 @@ export function BrainstormBoard({
             </button>
 
             <div className="empty-state-icon-frame">
-              <img
-                src="/synapse-ia-icone-semfundo.png"
-                alt=""
-                className="empty-state-icon"
-                style={{ filter: 'drop-shadow(0 0 22px rgba(139,92,246,0.36))' }}
-              />
+              <Brain size={40} aria-hidden="true" />
             </div>
 
             <div className="empty-state-copy">
@@ -526,9 +521,9 @@ export function BrainstormBoard({
         <div
           className="synapse-connecting-hint absolute top-4 left-1/2 -translate-x-1/2 flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium pointer-events-none"
           style={{
-            background: 'rgba(139,92,246,0.15)',
-            border: '1px solid rgba(139,92,246,0.4)',
-            color: '#c4b5fd',
+            background: 'rgba(255,255,255,0.92)',
+            border: '1px solid rgba(6,23,168,0.22)',
+            color: '#0617a8',
             backdropFilter: 'blur(12px)'
           }}
         >

@@ -5133,3 +5133,603 @@ button:focus, input:focus {
 :root[data-app-theme] .synapse-export-bg-white .synapse-export-branding span {
   color: #6d28d9;
 }
+
+/* Mars Enterprise global polish */
+:root[data-app-theme="mars-enterprise"] {
+  color-scheme: light;
+}
+
+:root[data-app-theme="mars-enterprise"] body {
+  background: var(--app-background);
+  color: var(--app-text);
+}
+
+:root[data-app-theme="mars-enterprise"] .app-container {
+  background:
+    radial-gradient(circle at 18% 12%, rgba(6, 23, 168, 0.045), transparent 30%),
+    radial-gradient(circle at 88% 18%, rgba(16, 191, 163, 0.055), transparent 24%),
+    radial-gradient(circle, rgba(15, 23, 42, 0.055) 1px, transparent 1px),
+    var(--app-background) !important;
+  background-size: auto, auto, 34px 34px, auto;
+}
+
+:root[data-app-theme="mars-enterprise"] .app-header {
+  border-bottom: 1px solid var(--app-border) !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  color: var(--app-text) !important;
+  box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .app-header h1,
+:root[data-app-theme="mars-enterprise"] .app-header-brand,
+:root[data-app-theme="mars-enterprise"] .plans-modal-title,
+:root[data-app-theme="mars-enterprise"] .plans-status-title,
+:root[data-app-theme="mars-enterprise"] .plans-plan-title,
+:root[data-app-theme="mars-enterprise"] .plans-price-value,
+:root[data-app-theme="mars-enterprise"] .map-stats-header h2,
+:root[data-app-theme="mars-enterprise"] .map-stats-metric h3,
+:root[data-app-theme="mars-enterprise"] .map-stats-metric-value,
+:root[data-app-theme="mars-enterprise"] .map-stats-card-header h3,
+:root[data-app-theme="mars-enterprise"] .map-stats-empty h4,
+:root[data-app-theme="mars-enterprise"] .map-stats-auth-counts strong,
+:root[data-app-theme="mars-enterprise"] .map-stats-category-meta span,
+:root[data-app-theme="mars-enterprise"] .settings-header h2,
+:root[data-app-theme="mars-enterprise"] .settings-card h3,
+:root[data-app-theme="mars-enterprise"] .settings-profile-identity .text-white,
+:root[data-app-theme="mars-enterprise"] .onboarding-hint h2 {
+  color: var(--app-text) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .plans-status-text,
+:root[data-app-theme="mars-enterprise"] .plans-plan-detail,
+:root[data-app-theme="mars-enterprise"] .plans-feature-text,
+:root[data-app-theme="mars-enterprise"] .plans-price-benefit,
+:root[data-app-theme="mars-enterprise"] .map-stats-header p,
+:root[data-app-theme="mars-enterprise"] .map-stats-metric p,
+:root[data-app-theme="mars-enterprise"] .map-stats-empty p,
+:root[data-app-theme="mars-enterprise"] .map-stats-auth-counts span,
+:root[data-app-theme="mars-enterprise"] .map-stats-category-meta strong,
+:root[data-app-theme="mars-enterprise"] .map-stats-legend span:not(.map-stats-dot),
+:root[data-app-theme="mars-enterprise"] .settings-header p,
+:root[data-app-theme="mars-enterprise"] .settings-card p,
+:root[data-app-theme="mars-enterprise"] .settings-tab-description,
+:root[data-app-theme="mars-enterprise"] .settings-field label,
+:root[data-app-theme="mars-enterprise"] .onboarding-hint__step p {
+  color: var(--app-muted-text) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .app-help-button,
+:root[data-app-theme="mars-enterprise"] .ai-quota-pill,
+:root[data-app-theme="mars-enterprise"] .app-bottom-nav,
+:root[data-app-theme="mars-enterprise"] .app-input-bar,
+:root[data-app-theme="mars-enterprise"] .canvas-toolbar,
+:root[data-app-theme="mars-enterprise"] .canvas-toolbar-toggle,
+:root[data-app-theme="mars-enterprise"] .canvas-export-popover,
+:root[data-app-theme="mars-enterprise"] .export-sheet-content,
+:root[data-app-theme="mars-enterprise"] .onboarding-hint__card {
+  border: 1px solid var(--app-border) !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  color: var(--app-text) !important;
+  box-shadow: 0 16px 40px rgba(15, 23, 42, 0.10) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .app-bottom-nav__button,
+:root[data-app-theme="mars-enterprise"] .app-help-button,
+:root[data-app-theme="mars-enterprise"] .canvas-toolbar__button,
+:root[data-app-theme="mars-enterprise"] .canvas-toolbar-toggle,
+:root[data-app-theme="mars-enterprise"] .export-panel__close {
+  color: var(--app-muted-text) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .app-bottom-nav__button:hover,
+:root[data-app-theme="mars-enterprise"] .app-bottom-nav__button.is-active,
+:root[data-app-theme="mars-enterprise"] .app-help-button:hover,
+:root[data-app-theme="mars-enterprise"] .app-help-button.is-active,
+:root[data-app-theme="mars-enterprise"] .canvas-toolbar__button:hover,
+:root[data-app-theme="mars-enterprise"] .canvas-toolbar__button:focus-visible,
+:root[data-app-theme="mars-enterprise"] .canvas-toolbar__button.is-active,
+:root[data-app-theme="mars-enterprise"] .canvas-toolbar-toggle:hover,
+:root[data-app-theme="mars-enterprise"] .canvas-toolbar-toggle:focus-visible {
+  border-color: color-mix(in srgb, var(--app-primary) 18%, var(--app-border)) !important;
+  background: var(--app-blue-soft) !important;
+  color: var(--app-primary) !important;
+  box-shadow: inset 0 0 0 1px rgba(6, 23, 168, 0.08) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .ai-quota-icon,
+:root[data-app-theme="mars-enterprise"] .app-input-action,
+:root[data-app-theme="mars-enterprise"] .export-panel__title-icon,
+:root[data-app-theme="mars-enterprise"] .export-option__icon,
+:root[data-app-theme="mars-enterprise"] .plans-header-icon,
+:root[data-app-theme="mars-enterprise"] .plans-status-icon,
+:root[data-app-theme="mars-enterprise"] .plans-plan-icon,
+:root[data-app-theme="mars-enterprise"] .map-stats-header-icon,
+:root[data-app-theme="mars-enterprise"] .map-stats-icon-box,
+:root[data-app-theme="mars-enterprise"] .map-stats-card-icon,
+:root[data-app-theme="mars-enterprise"] .settings-header-icon,
+:root[data-app-theme="mars-enterprise"] .settings-tab-icon,
+:root[data-app-theme="mars-enterprise"] .settings-section-icon,
+:root[data-app-theme="mars-enterprise"] .settings-plan-icon,
+:root[data-app-theme="mars-enterprise"] .onboarding-hint__icon {
+  border-color: color-mix(in srgb, var(--app-primary) 16%, var(--app-border)) !important;
+  background: color-mix(in srgb, var(--app-primary) 9%, #ffffff) !important;
+  color: var(--app-primary) !important;
+  box-shadow: none !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .app-input-action:hover {
+  background: var(--app-blue-soft) !important;
+  color: var(--app-primary-hover) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] input,
+:root[data-app-theme="mars-enterprise"] textarea,
+:root[data-app-theme="mars-enterprise"] .app-input-field,
+:root[data-app-theme="mars-enterprise"] .settings-input,
+:root[data-app-theme="mars-enterprise"] .workspaces-input {
+  border-color: var(--app-border) !important;
+  background: #ffffff !important;
+  color: var(--app-text) !important;
+  box-shadow: none !important;
+}
+
+:root[data-app-theme="mars-enterprise"] input:focus,
+:root[data-app-theme="mars-enterprise"] textarea:focus,
+:root[data-app-theme="mars-enterprise"] .settings-input:focus,
+:root[data-app-theme="mars-enterprise"] .workspaces-input:focus {
+  border-color: var(--app-primary) !important;
+  box-shadow: 0 0 0 3px rgba(6, 23, 168, 0.12) !important;
+  outline: 0 !important;
+}
+
+:root[data-app-theme="mars-enterprise"] input::placeholder,
+:root[data-app-theme="mars-enterprise"] textarea::placeholder,
+:root[data-app-theme="mars-enterprise"] .app-input-field::placeholder {
+  color: var(--app-text-subtle) !important;
+  opacity: 1;
+}
+
+:root[data-app-theme="mars-enterprise"] .synapse-canvas-root {
+  background:
+    radial-gradient(circle at 22% 18%, rgba(6, 23, 168, 0.035), transparent 28%),
+    radial-gradient(circle at 82% 70%, rgba(16, 191, 163, 0.040), transparent 26%),
+    var(--app-background) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .synapse-canvas-grid {
+  opacity: 0.78 !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .idea-balloon-card {
+  border-color: color-mix(in srgb, currentColor 28%, var(--app-border)) !important;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(6, 23, 168, 0.045), transparent 34%),
+    radial-gradient(circle at 82% 0%, rgba(16, 191, 163, 0.055), transparent 30%),
+    rgba(255, 255, 255, 0.96) !important;
+  color: var(--app-text) !important;
+  box-shadow: 0 16px 38px rgba(15, 23, 42, 0.13), 0 0 0 1px rgba(6, 23, 168, 0.05) !important;
+  backdrop-filter: blur(12px);
+}
+
+:root[data-app-theme="mars-enterprise"] .idea-balloon-root p,
+:root[data-app-theme="mars-enterprise"] .idea-balloon-root span,
+:root[data-app-theme="mars-enterprise"] .idea-ai-menu p,
+:root[data-app-theme="mars-enterprise"] .idea-category-menu span {
+  color: var(--app-text) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .idea-balloon-card .balloon-action-button,
+:root[data-app-theme="mars-enterprise"] .balloon-action-button {
+  border-color: transparent !important;
+  background: transparent !important;
+  color: var(--app-text-subtle) !important;
+  box-shadow: none !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .balloon-action-button:hover,
+:root[data-app-theme="mars-enterprise"] .balloon-action-button:focus-visible {
+  border-color: color-mix(in srgb, var(--app-primary) 16%, var(--app-border)) !important;
+  background: var(--app-blue-soft) !important;
+  color: var(--app-primary) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .idea-ai-menu,
+:root[data-app-theme="mars-enterprise"] .idea-category-menu,
+:root[data-app-theme="mars-enterprise"] .idea-delete-menu {
+  border: 1px solid var(--app-border) !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  color: var(--app-text) !important;
+  box-shadow: 0 22px 60px rgba(15, 23, 42, 0.14) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .neuron-selection-dot {
+  background: #ffffff !important;
+  box-shadow: 0 0 0 2px rgba(6, 23, 168, 0.16) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .synapse-connecting-hint {
+  border-color: color-mix(in srgb, var(--app-primary) 24%, var(--app-border)) !important;
+  background: rgba(255, 255, 255, 0.94) !important;
+  color: var(--app-primary) !important;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.10) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .map-stats-overlay,
+:root[data-app-theme="mars-enterprise"] .settings-modal-overlay,
+:root[data-app-theme="mars-enterprise"] .workspaces-modal-overlay,
+:root[data-app-theme="mars-enterprise"] .plans-modal-overlay,
+:root[data-app-theme="mars-enterprise"] .fixed > .absolute.inset-0 {
+  background: rgba(15, 23, 42, 0.30) !important;
+  backdrop-filter: blur(10px);
+}
+
+:root[data-app-theme="mars-enterprise"] .map-stats-panel,
+:root[data-app-theme="mars-enterprise"] .settings-modal-panel,
+:root[data-app-theme="mars-enterprise"] .workspaces-modal,
+:root[data-app-theme="mars-enterprise"] .plans-modal-panel {
+  border: 1px solid var(--app-border) !important;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(6, 23, 168, 0.045), transparent 30%),
+    radial-gradient(circle at 92% 8%, rgba(16, 191, 163, 0.055), transparent 26%),
+    #ffffff !important;
+  color: var(--app-text) !important;
+  box-shadow: 0 28px 80px rgba(15, 23, 42, 0.16) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .map-stats-panel::before,
+:root[data-app-theme="mars-enterprise"] .settings-modal-panel::before,
+:root[data-app-theme="mars-enterprise"] .plans-modal-aura {
+  background:
+    radial-gradient(circle at 50% 0%, rgba(6, 23, 168, 0.060), transparent 58%),
+    radial-gradient(circle at 86% 8%, rgba(16, 191, 163, 0.050), transparent 34%) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .map-stats-metric,
+:root[data-app-theme="mars-enterprise"] .map-stats-card,
+:root[data-app-theme="mars-enterprise"] .settings-sidebar,
+:root[data-app-theme="mars-enterprise"] .settings-card,
+:root[data-app-theme="mars-enterprise"] .workspaces-edit-card,
+:root[data-app-theme="mars-enterprise"] .workspaces-project-card,
+:root[data-app-theme="mars-enterprise"] .empty-state-step-card,
+:root[data-app-theme="mars-enterprise"] .plans-status-card,
+:root[data-app-theme="mars-enterprise"] .plans-plan-card,
+:root[data-app-theme="mars-enterprise"] .plans-price-box {
+  border: 1px solid var(--app-border) !important;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(6, 23, 168, 0.030), transparent 32%),
+    rgba(255, 255, 255, 0.94) !important;
+  color: var(--app-text) !important;
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08) !important;
+  backdrop-filter: none !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .empty-state-shell {
+  align-items: flex-start;
+  overflow-y: auto;
+  padding-top: 22px;
+  padding-bottom: 210px;
+}
+
+:root[data-app-theme="mars-enterprise"] .empty-state-card {
+  max-height: calc(100dvh - 260px);
+  overflow-y: auto;
+}
+
+:root[data-app-theme="mars-enterprise"] .plans-plan-card.is-highlighted,
+:root[data-app-theme="mars-enterprise"] .plans-price-box.is-highlighted,
+:root[data-app-theme="mars-enterprise"] .map-stats-metric.is-featured,
+:root[data-app-theme="mars-enterprise"] .workspaces-project-card.is-active,
+:root[data-app-theme="mars-enterprise"] .settings-plan-card {
+  border-color: color-mix(in srgb, var(--app-primary) 30%, var(--app-border)) !important;
+  background:
+    radial-gradient(circle at 86% 0%, rgba(16, 191, 163, 0.060), transparent 32%),
+    color-mix(in srgb, var(--app-primary) 6%, #ffffff) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .plans-plan-badge,
+:root[data-app-theme="mars-enterprise"] .workspaces-active-badge,
+:root[data-app-theme="mars-enterprise"] .empty-state-kicker,
+:root[data-app-theme="mars-enterprise"] .app-loading-eyebrow,
+:root[data-app-theme="mars-enterprise"] .auth-card__eyebrow,
+:root[data-app-theme="mars-enterprise"] .auth-enterprise-panel__eyebrow {
+  border-color: color-mix(in srgb, var(--app-accent) 28%, var(--app-border)) !important;
+  background: color-mix(in srgb, var(--app-accent) 12%, #ffffff) !important;
+  color: #0f766e !important;
+  box-shadow: none !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .plans-plan-badge.is-highlighted,
+:root[data-app-theme="mars-enterprise"] .plans-modal-subtitle,
+:root[data-app-theme="mars-enterprise"] .plans-price-limit,
+:root[data-app-theme="mars-enterprise"] .map-stats-legend strong,
+:root[data-app-theme="mars-enterprise"] .onboarding-hint__eyebrow {
+  color: var(--app-primary) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .plans-action-button,
+:root[data-app-theme="mars-enterprise"] .workspaces-secondary-button,
+:root[data-app-theme="mars-enterprise"] .settings-action,
+:root[data-app-theme="mars-enterprise"] .empty-state-cta,
+:root[data-app-theme="mars-enterprise"] .onboarding-hint__primary,
+:root[data-app-theme="mars-enterprise"] .export-panel__submit {
+  border: 1px solid color-mix(in srgb, var(--app-primary) 18%, var(--app-border)) !important;
+  background: #ffffff !important;
+  color: var(--app-primary) !important;
+  box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .plans-action-button.is-primary,
+:root[data-app-theme="mars-enterprise"] .settings-action--primary,
+:root[data-app-theme="mars-enterprise"] .workspaces-primary-button,
+:root[data-app-theme="mars-enterprise"] .workspaces-new-button,
+:root[data-app-theme="mars-enterprise"] .btn-sync,
+:root[data-app-theme="mars-enterprise"] .export-panel__submit {
+  border-color: var(--app-primary) !important;
+  background: var(--app-primary) !important;
+  color: #ffffff !important;
+  box-shadow: 0 14px 30px rgba(6, 23, 168, 0.18) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .plans-action-button:hover,
+:root[data-app-theme="mars-enterprise"] .settings-action:hover,
+:root[data-app-theme="mars-enterprise"] .workspaces-secondary-button:hover,
+:root[data-app-theme="mars-enterprise"] .onboarding-hint__primary:hover {
+  background: var(--app-blue-soft) !important;
+  transform: translateY(-1px);
+}
+
+:root[data-app-theme="mars-enterprise"] .plans-action-button.is-primary:hover,
+:root[data-app-theme="mars-enterprise"] .settings-action--primary:hover,
+:root[data-app-theme="mars-enterprise"] .workspaces-primary-button:hover,
+:root[data-app-theme="mars-enterprise"] .workspaces-new-button:hover,
+:root[data-app-theme="mars-enterprise"] .btn-sync:hover,
+:root[data-app-theme="mars-enterprise"] .export-panel__submit:hover {
+  background: var(--app-primary-hover) !important;
+  color: #ffffff !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .plans-action-button:disabled,
+:root[data-app-theme="mars-enterprise"] .plans-action-button.is-current {
+  background: #f3f6fb !important;
+  color: var(--app-text-subtle) !important;
+  border-color: var(--app-border) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .map-stats-tone-purple {
+  --stats-tone: var(--app-primary);
+  --stats-tone-soft: rgba(6, 23, 168, 0.09);
+  --stats-tone-border: rgba(6, 23, 168, 0.22);
+}
+
+:root[data-app-theme="mars-enterprise"] .map-stats-tone-green {
+  --stats-tone: var(--app-accent);
+  --stats-tone-soft: rgba(16, 191, 163, 0.10);
+  --stats-tone-border: rgba(16, 191, 163, 0.24);
+}
+
+:root[data-app-theme="mars-enterprise"] .map-stats-tone-blue {
+  --stats-tone: var(--app-primary-hover);
+  --stats-tone-soft: rgba(11, 47, 209, 0.09);
+  --stats-tone-border: rgba(11, 47, 209, 0.22);
+}
+
+:root[data-app-theme="mars-enterprise"] .map-stats-tone-pink {
+  --stats-tone: #0f766e;
+  --stats-tone-soft: rgba(16, 191, 163, 0.08);
+  --stats-tone-border: rgba(16, 191, 163, 0.20);
+}
+
+:root[data-app-theme="mars-enterprise"] .map-stats-proportion,
+:root[data-app-theme="mars-enterprise"] .map-stats-category-bar {
+  background: #edf2f7 !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .map-stats-proportion span:first-child,
+:root[data-app-theme="mars-enterprise"] .map-stats-category-bar span {
+  background: linear-gradient(90deg, var(--app-primary), var(--app-primary-hover)) !important;
+  box-shadow: none !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .map-stats-proportion span:last-child,
+:root[data-app-theme="mars-enterprise"] .map-stats-dot.is-ai {
+  background: var(--app-accent) !important;
+  box-shadow: none !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .map-stats-dot.is-human,
+:root[data-app-theme="mars-enterprise"] .map-stats-network-art span {
+  background: var(--app-primary) !important;
+  box-shadow: none !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .map-stats-empty-art,
+:root[data-app-theme="mars-enterprise"] .map-stats-network-art {
+  border-color: color-mix(in srgb, var(--app-primary) 18%, var(--app-border)) !important;
+  background: var(--app-blue-soft) !important;
+  color: var(--app-primary) !important;
+  box-shadow: none !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .settings-modal-shell {
+  --settings-purple: var(--app-primary);
+  --settings-purple-soft: var(--app-primary-hover);
+  --settings-purple-bright: var(--app-primary);
+  --settings-bg: var(--app-background);
+  --settings-panel: #ffffff;
+  --settings-card: #ffffff;
+  --settings-border: var(--app-border);
+  --settings-border-strong: color-mix(in srgb, var(--app-primary) 28%, var(--app-border));
+  --settings-text-muted: var(--app-muted-text);
+}
+
+:root[data-app-theme="mars-enterprise"] .settings-tab-button {
+  color: var(--app-muted-text) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .settings-tab-button:hover,
+:root[data-app-theme="mars-enterprise"] .settings-tab-button.is-active {
+  border-color: color-mix(in srgb, var(--app-primary) 24%, var(--app-border)) !important;
+  background: var(--app-blue-soft) !important;
+  color: var(--app-primary) !important;
+  box-shadow: none !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .settings-tab-button.is-active::after {
+  background: var(--app-primary) !important;
+  box-shadow: none !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .settings-card--danger,
+:root[data-app-theme="mars-enterprise"] .settings-action--danger,
+:root[data-app-theme="mars-enterprise"] .settings-action--danger-soft {
+  border-color: rgba(220, 38, 38, 0.22) !important;
+  background: rgba(254, 242, 242, 0.92) !important;
+  color: #b42318 !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .settings-status-pill,
+:root[data-app-theme="mars-enterprise"] .settings-feedback--success {
+  border-color: rgba(16, 191, 163, 0.24) !important;
+  background: rgba(16, 191, 163, 0.10) !important;
+  color: #0f766e !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .settings-avatar-frame {
+  border-color: color-mix(in srgb, var(--app-primary) 24%, var(--app-border)) !important;
+  background: #ffffff !important;
+  box-shadow: 0 12px 28px rgba(15, 23, 42, 0.10) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .settings-avatar-badge {
+  border-color: var(--app-border) !important;
+  background: #ffffff !important;
+  color: var(--app-primary) !important;
+  box-shadow: 0 8px 18px rgba(15, 23, 42, 0.10) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .workspaces-modal-icon,
+:root[data-app-theme="mars-enterprise"] .workspaces-edit-icon,
+:root[data-app-theme="mars-enterprise"] .workspaces-project-icon,
+:root[data-app-theme="mars-enterprise"] .workspaces-empty-icon,
+:root[data-app-theme="mars-enterprise"] .empty-state-icon-frame,
+:root[data-app-theme="mars-enterprise"] .empty-state-step-icon {
+  border-color: color-mix(in srgb, var(--app-primary) 16%, var(--app-border)) !important;
+  background: var(--app-blue-soft) !important;
+  color: var(--app-primary) !important;
+  box-shadow: none !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .workspaces-empty-state {
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  box-sizing: border-box;
+  padding: 28px;
+  border: 1px dashed color-mix(in srgb, var(--app-primary) 22%, var(--app-border));
+  border-radius: 22px;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(6, 23, 168, 0.045), transparent 36%),
+    rgba(255, 255, 255, 0.72);
+  text-align: center;
+}
+
+:root[data-app-theme="mars-enterprise"] .workspaces-empty-icon {
+  width: 64px;
+  height: 64px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 20px;
+}
+
+:root[data-app-theme="mars-enterprise"] .workspaces-empty-state h3 {
+  margin: 8px 0 0;
+  color: var(--app-text);
+  font-size: 22px;
+  font-weight: 850;
+  line-height: 1.2;
+}
+
+:root[data-app-theme="mars-enterprise"] .workspaces-empty-state p {
+  max-width: 360px;
+  margin: 0;
+  color: var(--app-muted-text);
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+:root[data-app-theme="mars-enterprise"] .workspaces-modal-close,
+:root[data-app-theme="mars-enterprise"] .workspaces-icon-button,
+:root[data-app-theme="mars-enterprise"] .plans-close-button,
+:root[data-app-theme="mars-enterprise"] .map-stats-close,
+:root[data-app-theme="mars-enterprise"] .settings-close-button,
+:root[data-app-theme="mars-enterprise"] .empty-state-close,
+:root[data-app-theme="mars-enterprise"] .onboarding-hint__close {
+  border-color: var(--app-border) !important;
+  background: #ffffff !important;
+  color: var(--app-muted-text) !important;
+  box-shadow: none !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .workspaces-icon-button.is-primary,
+:root[data-app-theme="mars-enterprise"] .workspaces-icon-button:hover,
+:root[data-app-theme="mars-enterprise"] .plans-close-button:hover,
+:root[data-app-theme="mars-enterprise"] .map-stats-close:hover,
+:root[data-app-theme="mars-enterprise"] .settings-close-button:hover,
+:root[data-app-theme="mars-enterprise"] .empty-state-close:hover,
+:root[data-app-theme="mars-enterprise"] .onboarding-hint__close:hover {
+  border-color: color-mix(in srgb, var(--app-primary) 22%, var(--app-border)) !important;
+  background: var(--app-blue-soft) !important;
+  color: var(--app-primary) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1 !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8 !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .text-purple-100,
+:root[data-app-theme="mars-enterprise"] .text-purple-200,
+:root[data-app-theme="mars-enterprise"] .text-purple-300,
+:root[data-app-theme="mars-enterprise"] .text-purple-400,
+:root[data-app-theme="mars-enterprise"] .text-purple-500,
+:root[data-app-theme="mars-enterprise"] .text-purple-700 {
+  color: var(--app-primary) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .text-white,
+:root[data-app-theme="mars-enterprise"] .text-gray-100,
+:root[data-app-theme="mars-enterprise"] .text-gray-200,
+:root[data-app-theme="mars-enterprise"] .text-gray-300 {
+  color: var(--app-text) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .text-gray-400,
+:root[data-app-theme="mars-enterprise"] .text-gray-500,
+:root[data-app-theme="mars-enterprise"] .text-gray-600 {
+  color: var(--app-muted-text) !important;
+}
+
+:root[data-app-theme="mars-enterprise"] .bg-black\/60,
+:root[data-app-theme="mars-enterprise"] .bg-\[\#08070d\]\/80,
+:root[data-app-theme="mars-enterprise"] .bg-\[\#120d13\]\/95,
+:root[data-app-theme="mars-enterprise"] .bg-\[\#100c18\]\/95 {
+  background-color: #ffffff !important;
+}
+
+@media (max-height: 760px) {
+  :root[data-app-theme="mars-enterprise"] .empty-state-shell {
+    padding-top: 14px;
+    padding-bottom: 220px;
+  }
+
+  :root[data-app-theme="mars-enterprise"] .empty-state-card {
+    max-height: calc(100dvh - 300px);
+  }
+}

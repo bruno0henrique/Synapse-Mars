@@ -46,7 +46,7 @@ interface IdeaBalloonProps {
 const AI_ACTIONS = [
   { key: 'root-cause', label: 'Encontrar Causa Raiz', icon: Search, color: '#ef4444', bg: 'rgba(239,68,68,0.15)' },
   { key: 'next-steps', label: 'Próximos Passos', icon: ArrowRight, color: '#06b6d4', bg: 'rgba(6,182,212,0.15)' },
-  { key: 'expand', label: 'Expandir Ideia', icon: Lightbulb, color: '#a855f7', bg: 'rgba(168,85,247,0.15)' }
+  { key: 'expand', label: 'Expandir Ideia', icon: Lightbulb, color: '#0617a8', bg: 'rgba(6,23,168,0.10)' }
 ];
 
 const PRESET_CATEGORIES = ['Problema', 'Solução', 'Recurso', 'Objetivo', 'Risco'];
@@ -85,7 +85,7 @@ export function IdeaBalloon({
   // Custom category state
   const [showCustomCat, setShowCustomCat] = useState(false);
   const [customCatName, setCustomCatName] = useState('');
-  const [customCatColor, setCustomCatColor] = useState(recentColors[0] || '#a855f7');
+  const [customCatColor, setCustomCatColor] = useState(recentColors[0] || '#0617a8');
 
   const dragStart = useRef<{ mx: number; my: number; px: number; py: number } | null>(null);
   const resizeStart = useRef<{ mx: number; my: number; sw: number; sh: number; sy: number } | null>(null);
