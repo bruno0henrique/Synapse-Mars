@@ -10,7 +10,9 @@ import {
   Image as ImageIcon,
   LogOut,
   CreditCard,
-  Sparkles
+  Sparkles,
+  FileJson,
+  FileText
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import type { BillingLoadState, BillingStatus } from '../../lib/billing';
@@ -19,6 +21,7 @@ interface SettingsModalProps {
   isOpen: boolean;
   onClose: () => void;
   onClearWorkspace: () => void;
+  onExportWorkspace: (format: 'json' | 'pdf') => void | Promise<void>;
   billingStatus: BillingStatus;
   billingLoadState: BillingLoadState;
   billingError: string | null;
@@ -418,10 +421,12 @@ const ProfileIdentity = ({
 );
 
 const StatusPill = () => (
-  <span className="settings-status-pill box-border inline-flex min-h-12 max-w-full min-w-0 items-center gap-3 self-start whitespace-nowrap rounded-2xl !px-5 !py-3 sm:self-center">
-    <span className="h-3 w-3 shrink-0 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)] animate-pulse" />
-    <span className="min-w-0 text-base font-bold text-emerald-400">Conectado</span>
-  </span>
+  <div className="settings-status-pill" role="status" aria-label="Conectado">
+    <div className="settings-status-pill__inner">
+      <span className="settings-status-pill__dot" aria-hidden="true" />
+      <span className="settings-status-pill__text">Conectado</span>
+    </div>
+  </div>
 );
 
 function getPlanLabel(status: BillingStatus) {
@@ -505,7 +510,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   billingLoadState,
   billingError,
   onOpenPlans,
-  onManageSubscription
+  onManageSubscription,
+  onExportWorkspace
 }) => {
   const [user] = useState<DisabledAuthUser | null>(null);
   const [activeTab, setActiveTab] = useState<TabType>('perfil');
@@ -514,6 +520,7 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
   const [profileFeedback, setProfileFeedback] = useState<ProfileFeedback | null>(null);
   const [isSavingProfile, setIsSavingProfile] = useState(false);
   const [isUploadingImage, setIsUploadingImage] = useState(false);
+  const [exportingFormat, setExportingFormat] = useState<'json' | 'pdf' | null>(null);
 
   useEffect(() => {
     if (!user) return;
@@ -537,6 +544,15 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
       )
     ) {
       onClearWorkspace();
+    }
+  };
+
+  const handleExportWorkspace = async (format: 'json' | 'pdf') => {
+    setExportingFormat(format);
+    try {
+      await onExportWorkspace(format);
+    } finally {
+      setExportingFormat(null);
     }
   };
 
@@ -793,8 +809,8 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               className="settings-tab-panel box-border flex w-full min-w-0 flex-col gap-5 sm:gap-6"
             >
               <SettingsCard className="settings-data-card">
-                <SectionRow>
-                  <div className="box-border flex w-full min-w-0 items-start gap-4">
+                <SectionRow className="settings-connection-row">
+                  <div className="settings-section-copy box-border flex w-full min-w-0 items-start gap-4">
                     <span className="settings-section-icon box-border inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl">
                       <Database size={22} />
                     </span>
@@ -805,6 +821,41 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                   </div>
 
                   <StatusPill />
+                </SectionRow>
+              </SettingsCard>
+
+              <SettingsCard className="settings-export-data-card">
+                <SectionRow className="settings-export-row">
+                  <div className="settings-section-copy box-border flex w-full min-w-0 items-start gap-4">
+                    <span className="settings-section-icon box-border inline-flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl">
+                      <FileText size={22} />
+                    </span>
+                    <CardHeader
+                      title="Exportar dados"
+                      description="Baixe uma copia dos projetos e ideias do workspace."
+                    />
+                  </div>
+
+                  <div className="settings-export-actions">
+                    <ActionButton
+                      Icon={FileJson}
+                      onClick={() => handleExportWorkspace('json')}
+                      isLoading={exportingFormat === 'json'}
+                      disabled={exportingFormat !== null}
+                      className="settings-export-action-button"
+                    >
+                      Exportar JSON
+                    </ActionButton>
+                    <ActionButton
+                      Icon={FileText}
+                      onClick={() => handleExportWorkspace('pdf')}
+                      isLoading={exportingFormat === 'pdf'}
+                      disabled={exportingFormat !== null}
+                      className="settings-export-action-button"
+                    >
+                      Exportar PDF
+                    </ActionButton>
+                  </div>
                 </SectionRow>
               </SettingsCard>
 

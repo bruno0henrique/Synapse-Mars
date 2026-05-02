@@ -36,13 +36,6 @@ export function InputBar({ onAddIdea }: InputBarProps) {
           placeholder="Novo Insight..."
           className="app-input-field flex-1 bg-transparent border-none text-gray-300 placeholder-gray-500 text-sm focus:outline-none px-2"
         />
-
-        <button
-          type="button"
-          className="app-input-action flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center text-gray-500 hover:text-gray-300 transition-colors"
-        >
-          <Mic size={20} />
-        </button>
       </form>
     </div>
   );

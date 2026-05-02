@@ -124,6 +124,23 @@ type PendingIdeasSave = {
   projectId: string;
 };
 
+type WorkspaceExportProject = Project & {
+  ideas: Idea[];
+};
+
+type WorkspaceExportData = {
+  app: string;
+  workspace: string;
+  exportedAt: string;
+  activeProjectId: string | null;
+  totals: {
+    projects: number;
+    ideas: number;
+    connections: number;
+  };
+  projects: WorkspaceExportProject[];
+};
+
 type AiUsageView = {
   limit: number;
   remaining: number;
@@ -138,6 +155,97 @@ type PostLoginLoadingScreenProps = {
   canvasReady: boolean;
   message: string;
 };
+
+function escapeHtml(value: unknown) {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function downloadBlob(blob: Blob, fileName: string) {
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = fileName;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+  window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function buildWorkspaceExportHtml(data: WorkspaceExportData) {
+  const projectSections = data.projects.map(project => {
+    const ideaRows = project.ideas.length
+      ? project.ideas.map(idea => `
+          <tr>
+            <td>${escapeHtml(idea.text)}</td>
+            <td>${escapeHtml(idea.category || 'Sem categoria')}</td>
+            <td>${idea.isCentral ? 'Sim' : 'Nao'}</td>
+            <td>${idea.aiGenerated ? 'Sim' : 'Nao'}</td>
+            <td>${escapeHtml(idea.connections?.join(', ') || '-')}</td>
+          </tr>
+        `).join('')
+      : '<tr><td colspan="5">Nenhuma ideia neste projeto.</td></tr>';
+
+    return `
+      <section>
+        <h2>${escapeHtml(project.name || 'Projeto sem nome')}</h2>
+        <p>${escapeHtml(project.description || 'Sem descricao')}</p>
+        <table>
+          <thead>
+            <tr>
+              <th>Ideia</th>
+              <th>Categoria</th>
+              <th>Central</th>
+              <th>IA</th>
+              <th>Conexoes</th>
+            </tr>
+          </thead>
+          <tbody>${ideaRows}</tbody>
+        </table>
+      </section>
+    `;
+  }).join('');
+
+  return `<!doctype html>
+    <html lang="pt-BR">
+      <head>
+        <meta charset="utf-8" />
+        <title>Exportacao Synapse IA</title>
+        <style>
+          @page { margin: 18mm; }
+          body { color: #0f172a; font-family: Arial, sans-serif; line-height: 1.45; }
+          header { border-bottom: 2px solid #0617a8; margin-bottom: 22px; padding-bottom: 14px; }
+          h1 { color: #0617a8; font-size: 24px; margin: 0 0 8px; }
+          h2 { color: #0f172a; font-size: 18px; margin: 24px 0 6px; }
+          p { color: #475569; margin: 0 0 12px; }
+          .summary { display: flex; gap: 12px; margin: 16px 0; }
+          .summary div { border: 1px solid #d8e0ea; border-radius: 10px; padding: 10px 12px; }
+          .summary strong { color: #0617a8; display: block; font-size: 18px; }
+          table { border-collapse: collapse; margin-top: 12px; width: 100%; }
+          th, td { border: 1px solid #d8e0ea; font-size: 12px; padding: 8px; text-align: left; vertical-align: top; }
+          th { background: #e8edff; color: #0617a8; }
+          tr:nth-child(even) td { background: #f8fafc; }
+        </style>
+      </head>
+      <body>
+        <header>
+          <h1>Synapse IA - Exportacao de dados</h1>
+          <p>Workspace: ${escapeHtml(data.workspace)} | Exportado em ${escapeHtml(new Date(data.exportedAt).toLocaleString('pt-BR'))}</p>
+          <div class="summary">
+            <div><strong>${data.totals.projects}</strong>Projetos</div>
+            <div><strong>${data.totals.ideas}</strong>Ideias</div>
+            <div><strong>${data.totals.connections}</strong>Conexoes</div>
+          </div>
+        </header>
+        ${projectSections || '<p>Nenhum dado encontrado para exportar.</p>'}
+        <script>window.addEventListener('load', () => setTimeout(() => window.print(), 250));</script>
+      </body>
+    </html>`;
+}
 
 function PostLoginLoadingScreen({
   billingReady,
@@ -372,6 +480,70 @@ export default function App() {
     authHeaders.set('Authorization', `Bearer ${token}`);
     return authHeaders;
   }, [getToken]);
+
+  const handleExportWorkspaceData = useCallback(async (format: 'json' | 'pdf') => {
+    const exportProjects = projects.length > 0
+      ? projects
+      : activeProjectId
+        ? [{ id: activeProjectId, name: 'Workspace atual', description: '' }]
+        : [];
+
+    const projectsWithIdeas = await Promise.all(exportProjects.map(async project => {
+      if (project.id === activeProjectId) {
+        return { ...project, ideas };
+      }
+
+      try {
+        const headers = await createAuthHeaders();
+        const res = await fetch(`/api/get-ideas?projectId=${encodeURIComponent(project.id)}`, {
+          headers
+        });
+        const data = res.ok ? await res.json() : [];
+        return { ...project, ideas: Array.isArray(data) ? data : [] };
+      } catch (error) {
+        console.error('Erro ao buscar ideias para exportacao:', error);
+        return { ...project, ideas: [] };
+      }
+    }));
+
+    const exportData: WorkspaceExportData = {
+      app: 'Synapse IA',
+      workspace: 'Mars Enterprise',
+      exportedAt: new Date().toISOString(),
+      activeProjectId,
+      totals: {
+        projects: projectsWithIdeas.length,
+        ideas: projectsWithIdeas.reduce((total, project) => total + project.ideas.length, 0),
+        connections: projectsWithIdeas.reduce(
+          (total, project) => total + project.ideas.reduce((sum, idea) => sum + (idea.connections?.length || 0), 0),
+          0
+        )
+      },
+      projects: projectsWithIdeas
+    };
+
+    const stamp = new Date().toISOString().slice(0, 10);
+
+    if (format === 'json') {
+      downloadBlob(
+        new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json;charset=utf-8' }),
+        `synapse-mars-export-${stamp}.json`
+      );
+      return;
+    }
+
+    const html = buildWorkspaceExportHtml(exportData);
+    const url = URL.createObjectURL(new Blob([html], { type: 'text/html;charset=utf-8' }));
+    const printWindow = window.open(url, '_blank');
+
+    if (!printWindow) {
+      URL.revokeObjectURL(url);
+      window.alert('Nao foi possivel abrir a exportacao em PDF. Verifique se o navegador bloqueou pop-ups.');
+      return;
+    }
+
+    window.setTimeout(() => URL.revokeObjectURL(url), 30000);
+  }, [activeProjectId, createAuthHeaders, ideas, projects]);
 
   const refreshBillingStatus = useCallback(async (options: RefreshBillingOptions = {}) => {
     if (!isSignedIn) {
@@ -1362,6 +1534,7 @@ export default function App() {
         isOpen={activeNav === 'settings'}
         onClose={() => setActiveNav('grid')}
         onClearWorkspace={clearAll}
+        onExportWorkspace={handleExportWorkspaceData}
         billingStatus={billingStatus}
         billingLoadState={billingLoadState}
         billingError={billingError}

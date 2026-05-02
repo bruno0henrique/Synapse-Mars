@@ -132,8 +132,8 @@
   --app-secondary: #0B2FD1;
   --app-accent: #10BFA3;
   --app-blue-soft: #E8EDFF;
-  --app-dot: rgba(15, 23, 42, 0.10);
-  --app-grid-line: rgba(6, 23, 168, 0.08);
+  --app-dot: rgba(15, 23, 42, 0.22);
+  --app-grid-line: rgba(6, 23, 168, 0.16);
   --app-shadow: rgba(15, 23, 42, 0.10);
   --app-glow: rgba(6, 23, 168, 0.10);
   --app-canvas-ambient:
