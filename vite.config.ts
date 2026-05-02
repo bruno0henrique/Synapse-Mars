@@ -24,7 +24,7 @@ export default defineConfig({
       manifest: {
         name: 'Synapse IA — Brainstorm Neural',
         short_name: 'Synapse IA',
-        description: 'Organizador de Brainstorm Neural com IA',
+        description: 'Organizador de Brainstorm Neural for Mars',
         theme_color: '#0f172a',
         background_color: '#0f172a',
         display: 'standalone',
